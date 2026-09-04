@@ -24,12 +24,9 @@
 <link rel="icon" type="image/png" href="assets/img/herramientas-titulo.jpg">
 
 </head>
-
 <body class="stretched device-xl has-plugin-easing has-plugin-bootstrap has-plugin-swiper has-plugin-animations has-plugin-hoveranimation has-plugin-carousel has-plugin-isotope gototop-active">
 
-	<!-- Document Wrapper
-	============================================= -->
-	<div id="wrapper" class="clearfix">
+<div id="wrapper" class="clearfix">
 
 		<!-- Header
 		============================================= -->
@@ -106,102 +103,49 @@
 					</div>
 				</div>
 			</div>
-			<div class="header-wrap-clone" style="height: 101px;"></div>
-		</header><!-- #header end -->
 
-		<section id="hero" class="hero-banner">
-			<div class="container">
-				<div class="hero-caption">
-					<h2 id="Titulo-cartelera">FERRETERIA LOS MAESTROS</h2>
-					<p>DISTRIBUCIÓN DE HERRAMIENTAS</p>
-				</div>
-			</div>
-		</section>
 
-		<section id="content">
-			<div class="heading-block center mt-50"><br>
-			<br>
-				<a id="servicios"></a><h3>Productos destacados</h3></div>
+    <form id="formulario-registro" novalidate>
+  <div class="campo-formulario">
+    <label for="rut">RUT sin puntos ni guion</label>
+    <input id="rut" name="rut" type="text"
+           maxlength="9" aria-describedby="error-rut">
+    <small id="error-rut" class="mensaje-error"></small>
+  </div>
 
-			<!-- Productos destacados-->
-			<div class="container">
-				<div class="productos-grid">
+  <div class="campo-formulario">
+    <label for="nombre">Nombre</label>
+    <input id="nombre" name="nombre" type="text"
+           maxlength="50" aria-describedby="error-nombre">
+    <small id="error-nombre" class="mensaje-error"></small>
+  </div>
 
-					<article class="producto" data-codigo="MC001"></article>
-					<article class="producto" data-codigo="PT001"></article>
-					<article class="producto" data-codigo="HM001"></article>
-					<article class="producto" data-codigo="MC009"></article>
+  <div class="campo-formulario">
+    <label for="correo">Correo</label>
+    <input id="correo" name="correo" type="email"
+           aria-describedby="error-correo">
+    <small id="error-correo" class="mensaje-error"></small>
+  </div>
 
-				</div>
-			</div>
-			<div>class="heading-block center</div>
+  <div class="campo-formulario">
+    <label for="fecha-nacimiento">Fecha de nacimiento</label>
+    <input id="fecha-nacimiento" name="fechaNacimiento"
+           type="date" aria-describedby="error-fecha">
+    <small id="error-fecha" class="mensaje-error"></small>
+  </div>
 
-		</section><!-- #content end -->
+  <div class="campo-formulario">
+    <label for="contrasena">Contraseña</label>
+    <input id="contrasena" name="contrasena" type="password"
+           aria-describedby="error-contrasena">
+    <small id="error-contrasena" class="mensaje-error"></small>
+  </div>
 
-		<!-- Footer
-		============================================= -->
-		<footer id="footer" class="dark">
-			<!-- Copyrights
-			============================================= -->
-			<div id="copyrights">
-				<div class="container">
+  <button type="submit">Crear cuenta</button>
+  <p id="mensaje-exito" role="status"></p>
+</form>
 
-					<div class="row justify-content-between col-mb-30">
-						<div class="col-12 col-lg-auto text-center text-lg-start order-last order-lg-first">
-							<img src="images/footer-logo.png" alt="Image" class="mb-4"><br>
-						Antonio Varas 666, Santiago <a href="https://wa.me/56945511538" target="_blank">+56945511538</a> / <a href="https://wa.me/56920859693" target="_blank">+56920859693</a></div>
+<script src="assets/js/registro.js"></script>
+</body>
+</html>
 
-						<div class="col-12 col-lg-auto text-center text-lg-end">
-							<div class="copyrights-menu copyright-links">
-								<a href="index.html">Inicio</a>/<a href="empresa.html">Empresa</a>/<a href="index.html#servicios">Nuestros Servicios</a>/<a href="contacto.html">Contacto</a>
-							</div>
-
-                            <a href="https://web.facebook.com/texdigital" target="_blank" class="social-icon inline-block si-medium mb-0 si-facebook">
-								<i class="icon-facebook"></i>
-								<i class="icon-facebook"></i>
-							</a>
-                            <a href="https://www.instagram.com/texdigital_chile/" target="_blank" class="social-icon inline-block si-medium mb-0 si-instagram">
-								<i class="icon-instagram"></i>
-								<i class="icon-instagram"></i>
-							</a>
-                             <a href="https://www.linkedin.com/in/tex-digital-textiles-digitales-ltda-6050b361" target="_blank" class="social-icon inline-block si-medium mb-0 si-linkedin">
-								<i class="icon-linkedin"></i>
-								<i class="icon-linkedin"></i>
-							</a>
-                            <a href="https://wa.me/56912345678" target="_blank" class="social-icon inline-block si-medium mb-0 si-whatsapp">
-								<i class="icon-whatsapp"></i>
-								<i class="icon-whatsapp"></i>
-							</a>
-                            <a href="contacto@texdigital.cl" target="_blank" class="social-icon inline-block si-medium mb-0 si-mail">
-								<i class="icon-mail"></i>
-								<i class="icon-mail"></i>
-							</a>
-
-						</div>
-					</div>
-
-				</div>
-			</div><!-- #copyrights end -->
-		</footer><!-- #footer end -->
-
-	<!-- #wrapper end -->
-	</div>
-
-	<!-- Go To Top
-	============================================= -->
-	<div id="gotoTop" class="icon-angle-up" style="display: block;"></div>
-
-	<!-- JavaScripts
-	============================================= -->
-	<script src="js/jquery.js"></script>
-	<script src="js/plugins.min.js"></script>
-
-	<!-- Footer Scripts
-	============================================= -->
-	<script src="js/functions.js"></script>
-
-	<!-- Custom Scripts
-	============================================= -->
-	<script src="assets/js/app.js"></script>
-
-</body></html>
