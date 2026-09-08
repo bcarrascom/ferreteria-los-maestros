@@ -1,207 +1,143 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US"><head>
+<html lang="es-CL">
+<head>
 
-	<meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="Tex digital, telas impresas, impresion textil, banderas, velas,velas publicitarias, POP, punto de ventas, regalos publicitarios, estructuras para ferias y eventos, textiles deco, texdigital, impresion textil, textil, impresiones,telas ignífugas, telas, impresión en tela" content="Somos una empresa especializada en estampado de textiles para fines publicitarios y decorativos.">
-<meta name="Texdigital" content="Texdigital - impresiones textiles.">
-<meta name="robots" content="all">
-
-	<!-- Stylesheets
-	============================================= -->
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Poppins:300,400,500,600,700|PT+Serif:400,400i&amp;display=swap" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="css/bootstrap.css" type="text/css">
-	<link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-	<link rel="stylesheet" href="css/swiper.css" type="text/css">
-	<link rel="stylesheet" href="css/dark.css" type="text/css">
-	<link rel="stylesheet" href="css/font-icons.css" type="text/css">
-	<link rel="stylesheet" href="css/animate.css" type="text/css">
-	<link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
-
-	<link rel="stylesheet" href="css/estilos.css" type="text/css">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Ferretería Los Maestros, La Serena. Materiales de construcción, herramientas, gasfitería y electricidad con stock consultable en línea.">
+	<meta name="keywords" content="ferretería, La Serena, materiales de construcción, herramientas, gasfitería, electricidad, pinturas, contratistas">
 
-	<title>Texdigital - Inicio</title>
-<link rel="icon" type="image/png" href="assets/img/herramientas-titulo.jpg">
+	<title>Ferretería Los Maestros - Inicio</title>
+
+	<link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600;700&display=swap">
+	<link rel="stylesheet" href="css/estilos.css">
 
 </head>
 
-<body class="stretched device-xl has-plugin-easing has-plugin-bootstrap has-plugin-swiper has-plugin-animations has-plugin-hoveranimation has-plugin-carousel has-plugin-isotope gototop-active">
+<body data-pagina="inicio">
 
-	<!-- Document Wrapper
-	============================================= -->
-	<div id="wrapper" class="clearfix">
+	<!-- ============================================================
+	     CABECERA - bloque idéntico en las 14 páginas.
+	     No se modifica por página: el enlace activo lo resuelve el CSS
+	     leyendo el atributo data-pagina del <body>.
+	     ============================================================ -->
+	<header class="cabecera">
 
-		<!-- Header
-		============================================= -->
-		<header id="header" class="full-header sticky-header sticky-header-shrink">
-			<div id="header-wrap" class="">
-				<div class="container">
-					<div class="header-row top-search-parent">
+		<a class="cabecera-logo" href="index.html">
+			<img src="assets/img/logo.jpg" alt="Ferretería Los Maestros" width="140" height="60">
+		</a>
 
-						<!-- Logo
-						============================================= -->
-						<div id="logo">
-							<a href="index.html" class="standard-logo" data-dark-logo="images/logo-dark.png"><img src="assets/img/logo.jpg" alt="Logo" style="height: 60px;"></a>
-							<a href="index.html" class="retina-logo" data-dark-logo="images/logo-dark@2x.png"><img src="assets/img/logo.jpg" alt="Logo" style="height: 60px;"></a>
-						</div><!-- #logo end -->
+		<button class="menu-boton" type="button" aria-expanded="false" aria-controls="menu-principal">
+			<span class="menu-boton-barra" aria-hidden="true"></span>
+			<span class="menu-boton-barra" aria-hidden="true"></span>
+			<span class="menu-boton-barra" aria-hidden="true"></span>
+			<span class="visualmente-oculto">Abrir o cerrar el menú de navegación</span>
+		</button>
 
-						<div class="header-misc">
-                          <ul id="top-social">
-							<li><a href="https://web.facebook.com/ferreteria_los_maestros" target="_blank" class="si-facebook"><span class="ts-icon"><img src="assets/img/facebook-logo.png" alt="Facebook"></span><span class="ts-text">Facebook</span></a></li>
-							<li><a href="https://www.instagram.com/ferreteria_los_maestros" target="_blank" class="si-instagram"><span class="ts-icon"><img src="assets/img/instagram-logo.png" alt="Instagram"></span><span class="ts-text">Instagram</span></a></li>
-                            <li class="d-none d-sm-flex"><a href="https://www.linkedin.com" target="_blank" class="si-linkedin"><span class="ts-icon"><img src="assets/img/linkedin-logo.png" alt="Linkedin"></span><span class="ts-text">Linkedin</span></a></li>
-							<li><a href="https://wa.me/56911111111" target="_blank" class="si-whatsapp"><span class="ts-icon"><img src="assets/img/whatsapp-logo.png" alt="WhatsApp"></span><span class="ts-text">+56 945511538 </span></a></li>
-							<li><a href="mailto:contacto@texdigital.cl" class="si-email3"><span class="ts-icon"><i class="icon-email3"></i></span><span class="ts-text">contacto@texdigital.cl</span></a></li>
-                          </ul>
+		<nav class="menu" id="menu-principal" aria-label="Navegación principal">
+			<ul class="menu-lista">
+				<li><a class="menu-enlace" href="index.html">Inicio</a></li>
+				<li><a class="menu-enlace" href="catalogo.html">Catálogo</a></li>
+				<li><a class="menu-enlace" href="nosotros.html">Nosotros</a></li>
+				<li><a class="menu-enlace" href="blogs.html">Blogs</a></li>
+				<li><a class="menu-enlace" href="contacto.html">Contacto</a></li>
+			</ul>
+		</nav>
 
-						</div>
+		<ul class="cabecera-acciones">
+			<li><a href="login.html">Ingresar</a></li>
+			<li><a href="carrito.html">Carrito (<span id="carrito-cantidad">0</span>)</a></li>
+		</ul>
 
-						<div id="primary-menu-trigger">
-							<svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
-						</div>
+		<ul class="cabecera-redes">
+			<li><a href="https://web.facebook.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+				<img src="assets/img/facebook-logo.png" alt="Facebook de Ferretería Los Maestros" width="18" height="18"></a></li>
+			<li><a href="https://www.instagram.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+				<img src="assets/img/instagram-logo.png" alt="Instagram de Ferretería Los Maestros" width="18" height="18"></a></li>
+			<li><a href="https://wa.me/56912345678" target="_blank" rel="noopener">
+				<img src="assets/img/whatsapp-logo.png" alt="WhatsApp de Ferretería Los Maestros" width="18" height="18"></a></li>
+		</ul>
 
-						<!-- Primary Navigation
-						============================================= -->
-						<nav class="primary-menu align-content-center">
+	</header>
 
-							<ul class="menu-container">
-								<li class="menu-item">
-									<a class="menu-link" href="index.html" style="padding-top: 19px; padding-bottom: 19px;"><div>Inicio</div></a>
-									</li>
-                                <li class="menu-item">
-									<a class="menu-link" href="empresa.html" style="padding-top: 19px; padding-bottom: 19px;"><div>Empresa</div></a>
-									</li>
-								<li class="menu-item sub-menu">
-									<a class="menu-link" href="#" style="padding-top: 19px; padding-bottom: 19px;"><div>Catalogo<i class="icon-angle-down"></i></div></a>
-									<ul class="sub-menu-container" style="">
+	<main>
 
-										<li class="menu-item" style="">
-											<a class="menu-link" href="estampado.html"><div><i class="icon-chevron-right1"></i>Electricidad</div></a>
-										</li>
-										<li class="menu-item" style="">
-											<a class="menu-link" href="eventos.html"><div><i class="icon-chevron-right1"></i>Pinturas</div></a>
-										</li>
-
-                                        <li class="menu-item" style="">
-											<a class="menu-link" href="visual.html "><div><i class="icon-chevron-right1"></i>Herramientas</div></a>
-										</li>
-                                         <li class="menu-item" style="">
-											<a class="menu-link" href="deco.html "><div><i class="icon-chevron-right1"></i>Gasfiteria</div></a>
-										</li>
-                                        <li class="menu-item" style="">
-											<a class="menu-link" href="accesorios.html "><div><i class="icon-chevron-right1"></i>Mat. Construccion</div></a>
-										</li>
-                                        </ul>
-								<button class="sub-menu-trigger icon-chevron-right"></button></li><li class="menu-item mega-menu">
-									<a class="menu-link" href="contacto.html" style="padding-top: 19px; padding-bottom: 19px;"><div>Contacto</div></a>
-								</li>
-							</ul>
-
-						</nav><!-- #primary-menu end -->
-
-						<form class="top-search-form" action="search.html" method="get">
-							<input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
-						</form>
-
-					</div>
-				</div>
-			</div>
-			<div class="header-wrap-clone" style="height: 101px;"></div>
-		</header><!-- #header end -->
-
-		<section id="hero" class="hero-banner">
-			<div class="container">
-				<div class="hero-caption">
-					<h2 id="Titulo-cartelera">FERRETERIA LOS MAESTROS</h2>
-					<p>DISTRIBUCIÓN DE HERRAMIENTAS</p>
-				</div>
-			</div>
+		<section class="hero" aria-labelledby="titulo-hero">
+			<h1 class="hero-texto" id="titulo-hero">Ferretería Los Maestros</h1>
+			<p class="hero-texto">22 años surtiendo a maestros y contratistas de La Serena. Revisa el stock en línea antes de venir.</p>
 		</section>
 
-		<section id="content">
-			<div class="heading-block center mt-50"><br>
-			<br>
-				<a id="servicios"></a><h3>Productos destacados</h3></div>
+		<section class="destacados" aria-labelledby="titulo-destacados">
+			<h2 id="titulo-destacados">Productos destacados</h2>
 
-			<!-- Productos destacados-->
-			<div class="container">
-				<div class="productos-grid">
+			<!-- Cada <article> se rellena desde data/productos.json según su data-codigo (assets/js/app.js) -->
+			<ul class="grilla-productos">
+				<li><article class="producto" data-codigo="MC001"></article></li>
+				<li><article class="producto" data-codigo="PT001"></article></li>
+				<li><article class="producto" data-codigo="HM001"></article></li>
+				<li><article class="producto" data-codigo="MC009"></article></li>
+			</ul>
 
-					<article class="producto" data-codigo="MC001"></article>
-					<article class="producto" data-codigo="PT001"></article>
-					<article class="producto" data-codigo="HM001"></article>
-					<article class="producto" data-codigo="MC009"></article>
+			<p class="destacados-pie"><a class="boton boton-secundario" href="catalogo.html">Ver el catálogo completo</a></p>
+		</section>
 
-				</div>
-			</div>
-			<div>class="heading-block center</div>
+	</main>
 
-		</section><!-- #content end -->
+	<!-- ============================================================
+	     PIE DE PÁGINA - bloque idéntico en las 14 páginas.
+	     ============================================================ -->
+	<footer class="pie">
 
-		<!-- Footer
-		============================================= -->
-		<footer id="footer" class="dark">
-			<!-- Copyrights
-			============================================= -->
-			<div id="copyrights">
-				<div class="container">
+		<section class="pie-bloque">
+			<h2>Ferretería Los Maestros</h2>
+			<address>
+				Antonio Varas 666, La Serena, Región de Coquimbo<br>
+				Teléfono: <a href="tel:+56912345678">+56 9 1234 5678</a><br>
+				Correo: <a href="mailto:contacto@ferreterialosmaestros.cl">contacto@ferreterialosmaestros.cl</a>
+			</address>
+			<p>Lunes a viernes de 8:30 a 19:00 · Sábados de 9:00 a 14:00</p>
+		</section>
 
-					<div class="row justify-content-between col-mb-30">
-						<div class="col-12 col-lg-auto text-center text-lg-start order-last order-lg-first">
-							<img src="images/footer-logo.png" alt="Image" class="mb-4"><br>
-						Antonio Varas 666, Santiago <a href="https://wa.me/56945511538" target="_blank">+56945511538</a> / <a href="https://wa.me/56920859693" target="_blank">+56920859693</a></div>
+		<section class="pie-bloque">
+			<h2>Navegación</h2>
+			<nav aria-label="Navegación del pie de página">
+				<ul class="pie-lista">
+					<li><a href="index.html">Inicio</a></li>
+					<li><a href="catalogo.html">Catálogo</a></li>
+					<li><a href="nosotros.html">Nosotros</a></li>
+					<li><a href="blogs.html">Blogs</a></li>
+					<li><a href="contacto.html">Contacto</a></li>
+					<li><a href="login.html">Iniciar sesión</a></li>
+					<li><a href="registro.html">Crear cuenta</a></li>
+					<li><a href="carrito.html">Carrito</a></li>
+				</ul>
+			</nav>
+		</section>
 
-						<div class="col-12 col-lg-auto text-center text-lg-end">
-							<div class="copyrights-menu copyright-links">
-								<a href="index.html">Inicio</a>/<a href="empresa.html">Empresa</a>/<a href="index.html#servicios">Nuestros Servicios</a>/<a href="contacto.html">Contacto</a>
-							</div>
+		<section class="pie-bloque">
+			<h2>Síguenos</h2>
+			<ul class="pie-redes">
+				<li><a href="https://web.facebook.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+					<img src="assets/img/facebook-logo.png" alt="" width="20" height="20"> Facebook</a></li>
+				<li><a href="https://www.instagram.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+					<img src="assets/img/instagram-logo.png" alt="" width="20" height="20"> Instagram</a></li>
+				<li><a href="https://www.linkedin.com/company/ferreteria-los-maestros" target="_blank" rel="noopener">
+					<img src="assets/img/linkedin-logo.png" alt="" width="20" height="20"> LinkedIn</a></li>
+				<li><a href="https://wa.me/56912345678" target="_blank" rel="noopener">
+					<img src="assets/img/whatsapp-logo.png" alt="" width="20" height="20"> WhatsApp</a></li>
+			</ul>
+		</section>
 
-                            <a href="https://web.facebook.com/texdigital" target="_blank" class="social-icon inline-block si-medium mb-0 si-facebook">
-								<i class="icon-facebook"></i>
-								<i class="icon-facebook"></i>
-							</a>
-                            <a href="https://www.instagram.com/texdigital_chile/" target="_blank" class="social-icon inline-block si-medium mb-0 si-instagram">
-								<i class="icon-instagram"></i>
-								<i class="icon-instagram"></i>
-							</a>
-                             <a href="https://www.linkedin.com/in/tex-digital-textiles-digitales-ltda-6050b361" target="_blank" class="social-icon inline-block si-medium mb-0 si-linkedin">
-								<i class="icon-linkedin"></i>
-								<i class="icon-linkedin"></i>
-							</a>
-                            <a href="https://wa.me/56912345678" target="_blank" class="social-icon inline-block si-medium mb-0 si-whatsapp">
-								<i class="icon-whatsapp"></i>
-								<i class="icon-whatsapp"></i>
-							</a>
-                            <a href="contacto@texdigital.cl" target="_blank" class="social-icon inline-block si-medium mb-0 si-mail">
-								<i class="icon-mail"></i>
-								<i class="icon-mail"></i>
-							</a>
+		<p class="pie-copyright">&copy; <time datetime="2026">2026</time> Ferretería Los Maestros &middot; La Serena, Chile</p>
 
-						</div>
-					</div>
+	</footer>
 
-				</div>
-			</div><!-- #copyrights end -->
-		</footer><!-- #footer end -->
-
-	<!-- #wrapper end -->
-	</div>
-
-	<!-- Go To Top
-	============================================= -->
-	<div id="gotoTop" class="icon-angle-up" style="display: block;"></div>
-
-	<!-- JavaScripts
-	============================================= -->
-	<script src="js/jquery.js"></script>
-	<script src="js/plugins.min.js"></script>
-
-	<!-- Footer Scripts
-	============================================= -->
-	<script src="js/functions.js"></script>
-
-	<!-- Custom Scripts
-	============================================= -->
+	<script src="assets/js/menu.js"></script>
+	<script src="assets/js/functions.js"></script>
 	<script src="assets/js/app.js"></script>
 
-</body></html>
+</body>
+</html>

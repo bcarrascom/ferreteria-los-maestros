@@ -1,9 +1,6 @@
-const titulo = document.querySelector("#Titulo-cartelera");
+// Rellena cada <article class="producto"> con los datos del producto
+// cuyo código coincide con su atributo data-codigo.
 
-console.log(titulo.textContent);
-
-// Carga el catálogo de productos y rellena cada panel .producto
-// según el código indicado en su atributo data-codigo.
 fetch("data/productos.json")
 	.then((respuesta) => respuesta.json())
 	.then((productos) => {
@@ -18,15 +15,14 @@ fetch("data/productos.json")
 				return;
 			}
 
-			// DEFINIMOS PRODUCTOS =================================================================
-			const imagen = producto.imagen || `assets/img/productos/${producto.codigo}.jpg`;
+			const imagen = `assets/img/productos/${producto.codigo}.jpg`;
+			const precio = producto.precio_venta_clp.toLocaleString("es-CL");
+
 			panel.innerHTML = `
 				<img class="producto-imagen" src="${imagen}" alt="${producto.nombre_producto}">
-				<div class="producto-info">
-					<h4 class="producto-nombre">${producto.nombre_producto}</h4>
-					<span class="producto-marca">${producto.marca}</span>
-					<span class="producto-precio">$${producto.precio_venta_clp.toLocaleString("es-CL")}</span>
-				</div>
+				<h3 class="producto-nombre">${producto.nombre_producto}</h3>
+				<p class="producto-marca">${producto.marca}</p>
+				<p class="producto-precio">$${precio}</p>
 			`;
 		});
 	})

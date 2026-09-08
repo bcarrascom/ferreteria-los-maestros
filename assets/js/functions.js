@@ -1,19 +1,24 @@
-/* Ferretería Los Maestros - comportamiento propio del sitio */
+// Ferretería Los Maestros - efecto de desvanecido del texto del hero al bajar.
 
-document.addEventListener('DOMContentLoaded', function () {
-	var caption = document.querySelector('.hero-banner .hero-caption');
-	if (!caption) return;
+document.addEventListener("DOMContentLoaded", function () {
+	const textosHero = document.querySelectorAll(".hero .hero-texto");
+	if (textosHero.length === 0) return;
 
-	var fadeDistance = 350; // px de scroll hasta que el texto desaparece por completo
+	// Si el usuario pidió menos animaciones en su sistema, no aplicamos el efecto.
+	if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-	function updateHeroFade() {
-		var scrolled = window.pageYOffset || document.documentElement.scrollTop;
-		var progress = Math.min(Math.max(scrolled / fadeDistance, 0), 1);
+	const distanciaDesvanecido = 350; // px de scroll hasta que el texto desaparece
 
-		caption.style.opacity = String(1 - progress);
-		caption.style.transform = 'translateY(' + (scrolled * 0.4) + 'px)';
+	function actualizarHero() {
+		const desplazamiento = window.scrollY;
+		const avance = Math.min(desplazamiento / distanciaDesvanecido, 1);
+
+		textosHero.forEach(function (texto) {
+			texto.style.opacity = String(1 - avance);
+			texto.style.transform = "translateY(" + desplazamiento * 0.4 + "px)";
+		});
 	}
 
-	updateHeroFade();
-	window.addEventListener('scroll', updateHeroFade, { passive: true });
+	actualizarHero();
+	window.addEventListener("scroll", actualizarHero, { passive: true });
 });
