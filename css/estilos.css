@@ -16,6 +16,8 @@
 	--color-borde: #dfe3e8;
 	--color-oscuro: #1c2126;
 	--color-error: #b42318;
+	--color-exito: #1a7f47;
+	--color-alerta: #9a6100;
 
 	--fuente-base: "Lato", system-ui, "Segoe UI", sans-serif;
 	--fuente-titulos: "Poppins", var(--fuente-base);
@@ -337,6 +339,75 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	color: var(--color-marca);
 }
 
+/* ---------- 6b. Catálogo ---------- */
+
+/* Una fila por categoría; las tarjetas bajan de línea en vez de scrollear */
+.categoria {
+	margin-top: var(--espacio-lg);
+}
+
+.categoria h3 {
+	padding-bottom: var(--espacio-xs);
+	border-bottom: 2px solid var(--color-borde);
+	font-size: 1.3rem;
+}
+
+.categoria-conteo {
+	font-family: var(--fuente-base);
+	font-size: 0.8rem;
+	font-weight: 400;
+	color: var(--color-texto-suave);
+	white-space: nowrap;
+}
+
+.grilla-catalogo {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--espacio-sm);
+	margin-top: var(--espacio-sm);
+}
+
+/* En el catálogo la tarjeta es vertical: la imagen es más alta que ancha */
+.grilla-catalogo .producto-imagen {
+	aspect-ratio: 3 / 4;
+	padding: var(--espacio-xs);
+}
+
+.grilla-catalogo .producto-nombre {
+	font-size: 0.9rem;
+}
+
+.producto-codigo {
+	margin: var(--espacio-xs) 0 0;
+	font-size: 0.7rem;
+	letter-spacing: 0.5px;
+	color: var(--color-texto-suave);
+}
+
+/* El estado también se dice con palabras: el color por sí solo no basta */
+.producto-stock {
+	margin: var(--espacio-xs) var(--espacio-xs) 0;
+	padding: 0.15rem var(--espacio-xs);
+	border-radius: var(--radio);
+	font-size: 0.72rem;
+	font-weight: 700;
+}
+
+.stock-disponible {
+	background: #e7f4ec;
+	color: var(--color-exito);
+}
+
+.stock-bajo {
+	background: #fdf3e2;
+	color: var(--color-alerta);
+}
+
+.stock-agotado {
+	background: #fbeae8;
+	color: var(--color-error);
+}
+
 /* ---------- 7. Páginas de contenido ---------- */
 
 /* Franja de título de las páginas interiores */
@@ -602,6 +673,11 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
+	.grilla-catalogo {
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--espacio-md);
+	}
+
 	.portada {
 		padding: var(--espacio-lg) var(--espacio-md);
 	}
@@ -640,6 +716,10 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	.grilla-productos,
 	.grilla-equipo {
 		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.grilla-catalogo {
+		grid-template-columns: repeat(5, 1fr);
 	}
 
 	.portada {
