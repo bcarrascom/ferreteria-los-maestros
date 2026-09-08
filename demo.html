@@ -4,10 +4,10 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Ferretería Los Maestros, La Serena. Materiales de construcción, herramientas, gasfitería y electricidad con stock consultable en línea.">
-	<meta name="keywords" content="ferretería, La Serena, materiales de construcción, herramientas, gasfitería, electricidad, pinturas, contratistas">
+	<meta name="description" content="CAMBIAR: descripción de esta página en una frase.">
+	<meta name="keywords" content="ferretería, La Serena, materiales de construcción, herramientas">
 
-	<title>Ferretería Los Maestros - Inicio</title>
+	<title>Ferretería Los Maestros - CAMBIAR</title>
 
 	<link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,8 +17,11 @@
 
 </head>
 
-<body data-pagina="inicio">
-
+<!-- CAMBIAR data-pagina por: inicio | catalogo | nosotros | blogs | contacto
+     Solo esos cinco valores pintan el enlace activo del menú. En las páginas
+     que no están en el menú (registro, login, carrito...) usa su propio nombre:
+     no hará match con ninguna regla y ningún enlace quedará marcado. -->
+<body data-pagina="CAMBIAR">
 	<!-- ============================================================
 	     CABECERA - bloque idéntico en las 14 páginas.
 	     No se modifica por página: el enlace activo lo resuelve el CSS
@@ -65,27 +68,11 @@
 
 	<main>
 
-		<section class="hero" aria-labelledby="titulo-hero">
-			<h1 class="hero-texto" id="titulo-hero">Ferretería Los Maestros</h1>
-			<p class="hero-texto">22 años surtiendo a maestros y contratistas de La Serena. Revisa el stock en línea antes de venir.</p>
-		</section>
-
-		<section class="destacados" aria-labelledby="titulo-destacados">
-			<h2 id="titulo-destacados">Productos destacados</h2>
-
-			<!-- Cada <article> se rellena desde data/productos.json según su data-codigo (assets/js/app.js) -->
-			<ul class="grilla-productos">
-				<li><article class="producto" data-codigo="MC001"></article></li>
-				<li><article class="producto" data-codigo="PT001"></article></li>
-				<li><article class="producto" data-codigo="HM001"></article></li>
-				<li><article class="producto" data-codigo="MC009"></article></li>
-			</ul>
-
-			<p class="destacados-pie"><a class="boton boton-secundario" href="catalogo.html">Ver el catálogo completo</a></p>
-		</section>
+		<!-- CAMBIAR: el contenido de esta página va aquí.
+		     Reglas: un solo <h1>, cada <section> con su encabezado
+		     y aria-labelledby apuntando al id de ese encabezado. -->
 
 	</main>
-
 	<!-- ============================================================
 	     PIE DE PÁGINA - bloque idéntico en las 14 páginas.
 	     ============================================================ -->
@@ -136,8 +123,11 @@
 	</footer>
 
 	<script src="assets/js/menu.js"></script>
-	<script src="assets/js/functions.js"></script>
-	<script src="assets/js/app.js"></script>
+
+	<!-- Descomenta solo lo que esta página necesite:
+	<script src="assets/js/functions.js"></script>   efecto del hero
+	<script src="assets/js/app.js"></script>         tarjetas de producto
+	-->
 
 </body>
 </html>

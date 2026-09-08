@@ -4,10 +4,10 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Ferretería Los Maestros, La Serena. Materiales de construcción, herramientas, gasfitería y electricidad con stock consultable en línea.">
-	<meta name="keywords" content="ferretería, La Serena, materiales de construcción, herramientas, gasfitería, electricidad, pinturas, contratistas">
+	<meta name="description" content="Historia, equipo y valores de Ferretería Los Maestros, negocio familiar de La Serena con 22 años atendiendo a vecinos y contratistas.">
+	<meta name="keywords" content="ferretería La Serena, historia, equipo, contratistas, Rengifo 320">
 
-	<title>Ferretería Los Maestros - Inicio</title>
+	<title>Ferretería Los Maestros - Nosotros</title>
 
 	<link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,8 +17,7 @@
 
 </head>
 
-<body data-pagina="inicio">
-
+<body data-pagina="nosotros">
 	<!-- ============================================================
 	     CABECERA - bloque idéntico en las 14 páginas.
 	     No se modifica por página: el enlace activo lo resuelve el CSS
@@ -65,27 +64,118 @@
 
 	<main>
 
-		<section class="hero" aria-labelledby="titulo-hero">
-			<h1 class="hero-texto" id="titulo-hero">Ferretería Los Maestros</h1>
-			<p class="hero-texto">22 años surtiendo a maestros y contratistas de La Serena. Revisa el stock en línea antes de venir.</p>
+		<section class="portada" aria-labelledby="titulo-nosotros">
+			<h1 id="titulo-nosotros">Nosotros</h1>
+			<p>Una ferretería de barrio en La Serena, atendida por la misma familia desde 2004.</p>
 		</section>
 
-		<section class="destacados" aria-labelledby="titulo-destacados">
-			<h2 id="titulo-destacados">Productos destacados</h2>
+		<section class="bloque" aria-labelledby="titulo-historia">
+			<h2 id="titulo-historia">Nuestra historia</h2>
 
-			<!-- Cada <article> se rellena desde data/productos.json según su data-codigo (assets/js/app.js) -->
-			<ul class="grilla-productos">
-				<li><article class="producto" data-codigo="MC001"></article></li>
-				<li><article class="producto" data-codigo="PT001"></article></li>
-				<li><article class="producto" data-codigo="HM001"></article></li>
-				<li><article class="producto" data-codigo="MC009"></article></li>
+			<p>Ferretería Los Maestros abrió sus puertas en <time datetime="2004">2004</time> en Rengifo 320, con un mesón, dos estantes y poco más de doscientos productos. La idea era simple: que el maestro que trabajaba en el barrio no tuviera que cruzar la ciudad para comprar un saco de cemento o media docena de tornillos.</p>
+
+			<p>Veintidós años después seguimos en la misma esquina, con un catálogo que supera las <strong>800 referencias</strong> entre materiales de construcción, herramientas eléctricas y manuales, gasfitería, electricidad y ferretería general. Lo que no cambió es quién atiende: el mismo dueño, ahora junto a su hijo y dos empleados que conocen a los clientes por su nombre.</p>
+
+			<figure class="figura">
+				<img src="assets/img/herramientas-nosotros.jpg" alt="Herramientas manuales ordenadas sobre el mesón de la ferretería" width="1200" height="630" loading="lazy">			</figure>
+
+			<ol class="linea-tiempo">
+				<li>
+					<time datetime="2004">2004</time>
+					<p>Abre el local en Rengifo 320 con poco más de 200 productos.</p>
+				</li>
+				<li>
+					<time datetime="2011">2011</time>
+					<p>Se suma el hijo del dueño y comenzamos a repartir materiales directo a las obras.</p>
+				</li>
+				<li>
+					<time datetime="2016">2016</time>
+					<p>Abrimos cuenta corriente para los contratistas que compran todos los meses.</p>
+				</li>
+				<li>
+					<time datetime="2020">2020</time>
+					<p>Empezamos a tomar pedidos por teléfono y WhatsApp para no cerrar durante la pandemia.</p>
+				</li>
+				<li>
+					<time datetime="2026">2026</time>
+					<p>Publicamos el catálogo en línea: hoy recibimos entre 30 y 50 llamadas diarias solo para preguntar si hay stock.</p>
+				</li>
+			</ol>
+		</section>
+
+		<section class="bloque" aria-labelledby="titulo-equipo">
+			<h2 id="titulo-equipo">Quiénes atienden</h2>
+
+			<ul class="grilla-equipo">
+				<li>
+					<article class="tarjeta">
+						<h3>Dueño y fundador</h3>
+						<p>Abrió el local en 2004. Se encarga de las compras a proveedores, de los precios y de las cuentas corrientes.</p>
+					</article>
+				</li>
+				<li>
+					<article class="tarjeta">
+						<h3>Jefe de local</h3>
+						<p>Hijo del fundador. Coordina el inventario, los despachos a obra y la atención de los contratistas.</p>
+					</article>
+				</li>
+				<li>
+					<article class="tarjeta">
+						<h3>Vendedor de mesón</h3>
+						<p>Atiende en sala, arma los pedidos y asesora en materiales de construcción y gasfitería.</p>
+					</article>
+				</li>
+				<li>
+					<article class="tarjeta">
+						<h3>Vendedor de mesón</h3>
+						<p>Atiende en sala y lleva el control de stock de herramientas y electricidad.</p>
+					</article>
+				</li>
+			</ul>
+		</section>
+
+		<section class="bloque" aria-labelledby="titulo-valores">
+			<h2 id="titulo-valores">Nuestros valores</h2>
+
+			<dl class="valores">
+				<dt>Precio justo</dt>
+				<dd>El mismo precio para el que compra un tornillo y para el que compra mil. Sin letra chica.</dd>
+
+				<dt>Asesoría de verdad</dt>
+				<dd>Si el producto que busca no le sirve para lo que necesita, se lo decimos. Preferimos perder una venta antes que un cliente.</dd>
+
+				<dt>Stock real</dt>
+				<dd>Si decimos que hay, hay. Por eso estamos publicando el inventario en línea: para que nadie viaje al local en vano.</dd>
+
+				<dt>La palabra empeñada</dt>
+				<dd>Trabajamos con cuenta corriente desde 2016 porque conocemos a nuestros clientes y confiamos en ellos.</dd>
+			</dl>
+		</section>
+
+		<section class="bloque" aria-labelledby="titulo-clientes">
+			<h2 id="titulo-clientes">A quiénes atendemos</h2>
+
+			<ul class="grilla-clientes">
+				<li>
+					<article class="tarjeta">
+						<h3>Clientes particulares</h3>
+						<p>Vecinos que llegan por una reparación puntual: una llave que gotea, un enchufe quemado, un muro que hay que pintar. Compran poco y necesitan que alguien les explique qué llevar.</p>
+					</article>
+				</li>
+				<li>
+					<article class="tarjeta">
+						<h3>Contratistas y maestros de obra</h3>
+						<p>Compran en volumen y varias veces por semana. Necesitan saber el stock antes de moverse, despacho a la obra y, en muchos casos, cuenta corriente para pagar a fin de mes.</p>
+					</article>
+				</li>
 			</ul>
 
-			<p class="destacados-pie"><a class="boton boton-secundario" href="catalogo.html">Ver el catálogo completo</a></p>
+			<p class="bloque-pie"><a class="boton" href="registro.html">Crear una cuenta</a></p>
 		</section>
 
-	</main>
 
+
+	</main>
 	<!-- ============================================================
 	     PIE DE PÁGINA - bloque idéntico en las 14 páginas.
 	     ============================================================ -->
@@ -136,8 +226,6 @@
 	</footer>
 
 	<script src="assets/js/menu.js"></script>
-	<script src="assets/js/functions.js"></script>
-	<script src="assets/js/app.js"></script>
 
 </body>
 </html>

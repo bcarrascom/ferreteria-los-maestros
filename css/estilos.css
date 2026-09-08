@@ -25,7 +25,7 @@
 	--espacio-md: 1.5rem;
 	--espacio-lg: 2.5rem;
 
-	--ancho-maximo: 1200px;
+	--ancho-maximo: 1400px;
 	--radio: 6px;
 	--sombra: 0 2px 8px rgba(0, 0, 0, 0.08);
 	--transicion: 200ms ease;
@@ -205,7 +205,6 @@ body[data-pagina="nosotros"]  .menu-enlace[href="nosotros.html"],
 body[data-pagina="blogs"]     .menu-enlace[href="blogs.html"],
 body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	color: var(--color-marca);
-	font-weight: 700;
 }
 
 /* ---------- 4. Botones ---------- */
@@ -268,7 +267,9 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 
 /* ---------- 6. Productos destacados ---------- */
 
-.destacados {
+/* Contenedor de sección: mismo ancho y respiro en todas las páginas */
+.destacados,
+.bloque {
 	max-width: var(--ancho-maximo);
 	margin: 0 auto;
 	padding: var(--espacio-lg) var(--espacio-sm);
@@ -312,7 +313,7 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	width: 100%;
 	aspect-ratio: 4 / 3;
 	padding: var(--espacio-sm);
-	object-fit: cover;
+	object-fit: contain; /* muestra el producto completo; cover lo recortaba */
 }
 
 .producto-nombre {
@@ -336,7 +337,134 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	color: var(--color-marca);
 }
 
-/* ---------- 7. Pie de página ---------- */
+/* ---------- 7. Páginas de contenido ---------- */
+
+/* Franja de título de las páginas interiores */
+.portada {
+	padding: var(--espacio-lg) var(--espacio-sm);
+	background: var(--color-fondo-alterno);
+	border-bottom: 1px solid var(--color-borde);
+	text-align: center;
+}
+
+.portada p {
+	max-width: 55ch;
+	margin: 0 auto;
+	color: var(--color-texto-suave);
+}
+
+/* Los párrafos se limitan a 70 caracteres: más ancho cansa la lectura */
+.bloque > p {
+	max-width: 70ch;
+}
+
+.bloque-pie {
+	max-width: none;
+	margin-top: var(--espacio-lg);
+	text-align: center;
+}
+
+.figura {
+	margin: var(--espacio-lg) 0;
+}
+
+.figura img {
+	width: 100%;
+	border-radius: var(--radio);
+}
+
+.figura figcaption {
+	margin-top: var(--espacio-xs);
+	font-size: 0.85rem;
+	color: var(--color-texto-suave);
+	text-align: center;
+}
+
+/* Línea de tiempo: la raya es el borde izquierdo de la lista */
+.linea-tiempo {
+	list-style: none;
+	margin: var(--espacio-md) 0 0;
+	padding-left: var(--espacio-md);
+	border-left: 3px solid var(--color-borde);
+}
+
+.linea-tiempo li {
+	position: relative;
+	padding-bottom: var(--espacio-md);
+}
+
+/* El punto sobre la raya: 24px del padding + 3px del borde + la mitad del punto */
+.linea-tiempo li::before {
+	content: "";
+	position: absolute;
+	left: calc(-1 * var(--espacio-md) - 8px);
+	top: 0.4rem;
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	background: var(--color-marca);
+}
+
+.linea-tiempo time {
+	display: block;
+	font-family: var(--fuente-titulos);
+	font-weight: 700;
+	color: var(--color-marca);
+}
+
+.linea-tiempo p {
+	margin: 0;
+}
+
+.grilla-equipo,
+.grilla-clientes {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--espacio-md);
+	margin-top: var(--espacio-md);
+}
+
+.tarjeta {
+	height: 100%;
+	padding: var(--espacio-md);
+	border: 1px solid var(--color-borde);
+	border-left: 4px solid var(--color-marca);
+	border-radius: var(--radio);
+	background: var(--color-fondo);
+	box-shadow: var(--sombra);
+	transition: box-shadow var(--transicion), transform var(--transicion);
+}
+
+.tarjeta:hover {
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+	transform: translateY(-3px);
+}
+
+.tarjeta h3 {
+	margin-bottom: var(--espacio-xs);
+}
+
+.tarjeta p {
+	margin: 0;
+}
+
+/* Lista de definiciones: dt es el término, dd su descripción */
+.valores {
+	margin: var(--espacio-md) 0 0;
+}
+
+.valores dt {
+	font-family: var(--fuente-titulos);
+	font-weight: 600;
+	color: var(--color-marca);
+}
+
+.valores dd {
+	max-width: 70ch;
+	margin: 0 0 var(--espacio-md);
+}
+
+/* ---------- 8. Pie de página ---------- */
 
 .pie {
 	display: grid;
@@ -384,7 +512,7 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	text-align: center;
 }
 
-/* ---------- 8. Formularios ---------- */
+/* ---------- 9. Formularios ---------- */
 
 .campo-formulario {
 	display: grid;
@@ -413,7 +541,7 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 }
 
 /* ============================================================
-   9. Tableta - a partir de 768 px
+   10. Tableta - a partir de 768 px
    ============================================================ */
 
 @media (min-width: 768px) {
@@ -468,8 +596,14 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 		gap: var(--espacio-xs);
 	}
 
-	.grilla-productos {
+	.grilla-productos,
+	.grilla-equipo,
+	.grilla-clientes {
 		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.portada {
+		padding: var(--espacio-lg) var(--espacio-md);
 	}
 
 	.pie {
@@ -482,7 +616,7 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 }
 
 /* ============================================================
-   10. Escritorio - a partir de 1280 px
+   11. Escritorio - a partir de 1280 px
    ============================================================ */
 
 @media (min-width: 1280px) {
@@ -503,8 +637,13 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 		font-size: 3.2rem;
 	}
 
-	.grilla-productos {
+	.grilla-productos,
+	.grilla-equipo {
 		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.portada {
+		padding: var(--espacio-lg);
 	}
 
 	.pie {
@@ -514,7 +653,7 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 }
 
 /* ============================================================
-   11. Accesibilidad: sin animaciones si el sistema las desactiva
+   12. Accesibilidad: sin animaciones si el sistema las desactiva
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
