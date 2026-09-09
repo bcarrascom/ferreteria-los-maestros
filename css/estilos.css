@@ -439,9 +439,17 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	margin: var(--espacio-lg) 0;
 }
 
-.figura img {
+.figura img,
+.figura iframe {
 	width: 100%;
 	border-radius: var(--radio);
+}
+
+/* aspect-ratio reserva el alto del video sin trucos de padding */
+.figura iframe {
+	display: block;
+	aspect-ratio: 16 / 9;
+	border: 0;
 }
 
 .figura figcaption {
