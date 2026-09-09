@@ -925,6 +925,119 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	margin: 0 0 var(--espacio-xs);
 }
 
+/* ---------- 9b. Tablas y panel de administración ---------- */
+
+.admin {
+	display: grid;
+}
+
+.aviso-acceso {
+	max-width: var(--ancho-maximo);
+	margin-inline: auto;
+	border-left-color: var(--color-error);
+	background: #fbeae8;
+	color: var(--color-error);
+}
+
+.menu-admin {
+	padding: var(--espacio-md) var(--espacio-sm) 0;
+}
+
+.menu-admin ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--espacio-xs);
+}
+
+.menu-admin-boton {
+	padding: 0.6rem 1rem;
+	border: 1px solid var(--color-borde);
+	border-radius: var(--radio);
+	background: var(--color-fondo);
+	color: var(--color-texto);
+	font-family: var(--fuente-titulos);
+	font-weight: 600;
+	cursor: pointer;
+	transition: background var(--transicion), color var(--transicion);
+}
+
+/* aria-pressed marca la sección abierta: el estado accesible es el hook de estilo */
+.menu-admin-boton[aria-pressed="true"] {
+	border-color: var(--color-marca);
+	background: var(--color-marca);
+	color: #fff;
+}
+
+/* En móvil la tabla se desliza dentro de su caja en vez de romper la página */
+.tabla-scroll {
+	margin: var(--espacio-md) 0;
+	overflow-x: auto;
+}
+
+.tabla {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+}
+
+.tabla caption {
+	margin-bottom: var(--espacio-xs);
+	color: var(--color-texto-suave);
+	font-size: 0.85rem;
+	text-align: left;
+}
+
+.tabla th,
+.tabla td {
+	padding: 0.6rem var(--espacio-xs);
+	border-bottom: 1px solid var(--color-borde);
+	text-align: left;
+	white-space: nowrap;
+}
+
+.tabla thead th {
+	background: var(--color-fondo-alterno);
+	font-family: var(--fuente-titulos);
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+.tabla tbody tr:hover {
+	background: var(--color-fondo-alterno);
+}
+
+.celda-numero {
+	text-align: right;
+}
+
+/* Alerta de reposición: color de fondo más la palabra "Reponer" en la celda */
+.fila-alerta {
+	background: #fdf3e2;
+}
+
+.fila-alerta:hover {
+	background: #fbe9c8;
+}
+
+.etiqueta-estado {
+	display: inline-block;
+	padding: 0.1rem 0.5rem;
+	border-radius: var(--radio);
+	font-size: 0.75rem;
+	font-weight: 700;
+}
+
+.estado-activo {
+	background: #e7f4ec;
+	color: var(--color-exito);
+}
+
+.estado-inactivo {
+	background: #fbeae8;
+	color: var(--color-error);
+}
+
 /* ============================================================
    10. Tableta - a partir de 768 px
    ============================================================ */
@@ -996,6 +1109,30 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 
 	.portada {
 		padding: var(--espacio-lg) var(--espacio-md);
+	}
+
+	/* Panel: menú lateral a la izquierda, contenido al centro */
+	.admin {
+		grid-template-columns: 220px 1fr;
+		align-items: start;
+	}
+
+	.admin > .portada,
+	.admin > .aviso-acceso {
+		grid-column: 1 / -1;
+	}
+
+	.menu-admin {
+		padding: var(--espacio-lg) 0 0 var(--espacio-md);
+	}
+
+	.menu-admin ul {
+		flex-direction: column;
+	}
+
+	.menu-admin-boton {
+		width: 100%;
+		text-align: left;
 	}
 
 	.pie {

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Panel de administración de Ferretería Los Maestros: gestión de usuarios y control de inventario. Acceso restringido.">
+	<meta name="keywords" content="administración, usuarios, inventario, stock, ferretería">
+
+	<title>Ferretería Los Maestros - Administración</title>
+
+	<link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@500;600;700&display=swap">
+	<link rel="stylesheet" href="css/estilos.css">
+
+</head>
+
+<body data-pagina="admin">
+	<header class="cabecera">
+
+		<a class="cabecera-logo" href="index.html">
+			<img src="assets/img/logo.jpg" alt="Ferretería Los Maestros" width="140" height="60">
+		</a>
+
+		<button class="menu-boton" type="button" aria-expanded="false" aria-controls="menu-principal">
+			<span class="menu-boton-barra" aria-hidden="true"></span>
+			<span class="menu-boton-barra" aria-hidden="true"></span>
+			<span class="menu-boton-barra" aria-hidden="true"></span>
+			<span class="visualmente-oculto">Abrir o cerrar el menú de navegación</span>
+		</button>
+
+		<nav class="menu" id="menu-principal" aria-label="Navegación principal">
+			<ul class="menu-lista">
+				<li><a class="menu-enlace" href="index.html">Inicio</a></li>
+				<li><a class="menu-enlace" href="catalogo.html">Catálogo</a></li>
+				<li><a class="menu-enlace" href="nosotros.html">Nosotros</a></li>
+				<li><a class="menu-enlace" href="blogs.html">Blogs</a></li>
+				<li><a class="menu-enlace" href="contacto.html">Contacto</a></li>
+			</ul>
+		</nav>
+
+		<ul class="cabecera-acciones">
+			<li><a href="login.html">Ingresar</a></li>
+			<li><a href="carrito.html">Carrito (<span id="carrito-cantidad">0</span>)</a></li>
+		</ul>
+
+		<ul class="cabecera-redes">
+			<li><a href="https://web.facebook.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+				<img src="assets/img/facebook-logo.png" alt="Facebook de Ferretería Los Maestros" width="18" height="18"></a></li>
+			<li><a href="https://www.instagram.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+				<img src="assets/img/instagram-logo.png" alt="Instagram de Ferretería Los Maestros" width="18" height="18"></a></li>
+			<li><a href="https://wa.me/56912345678" target="_blank" rel="noopener">
+				<img src="assets/img/whatsapp-logo.png" alt="WhatsApp de Ferretería Los Maestros" width="18" height="18"></a></li>
+		</ul>
+
+	</header>
+
+	<main class="admin">
+
+		<section class="portada" aria-labelledby="titulo-admin">
+			<h1 id="titulo-admin">Panel de administración</h1>
+			<p>Gestión de usuarios y control de inventario. Acceso restringido al perfil Administrador.</p>
+		</section>
+
+		<p class="confirmacion aviso-acceso" id="aviso-acceso" role="status"></p>
+
+		<nav class="menu-admin" id="menu-admin" aria-label="Secciones del panel">
+			<ul>
+				<li><button class="menu-admin-boton" type="button" data-seccion="usuarios" aria-pressed="true">Usuarios</button></li>
+				<li><button class="menu-admin-boton" type="button" data-seccion="productos" aria-pressed="false">Productos</button></li>
+			</ul>
+		</nav>
+
+		<section class="bloque" id="seccion-usuarios" aria-labelledby="titulo-usuarios">
+			<h2 id="titulo-usuarios">Usuarios</h2>
+			<p id="conteo-usuarios"></p>
+
+			<figure class="tabla-scroll">
+				<table class="tabla">
+					<caption>Usuarios registrados en el sistema</caption>
+					<thead>
+						<tr>
+							<th scope="col">RUN</th>
+							<th scope="col">Nombre</th>
+							<th scope="col">Correo</th>
+							<th scope="col">Perfil</th>
+							<th scope="col">Comuna</th>
+							<th scope="col">Estado</th>
+							<th scope="col">Acción</th>
+						</tr>
+					</thead>
+					<tbody id="tabla-usuarios"></tbody>
+				</table>
+			</figure>
+
+			<p class="confirmacion" id="confirmacion-usuario" role="status"></p>
+
+			<h3>Nuevo usuario</h3>
+
+			<form class="formulario" id="formulario-usuario" novalidate>
+
+				<p class="campo-formulario">
+					<label for="u-run">RUN</label>
+					<input type="text" id="u-run" name="u-run" aria-describedby="ayuda-u-run error-u-run">
+					<span class="ayuda" id="ayuda-u-run">Sin puntos ni guion. Ejemplo: 19011001K</span>
+					<span class="mensaje-error" id="error-u-run" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="u-nombre">Nombre</label>
+					<input type="text" id="u-nombre" name="u-nombre" autocomplete="given-name" aria-describedby="error-u-nombre">
+					<span class="mensaje-error" id="error-u-nombre" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="u-apellidos">Apellidos</label>
+					<input type="text" id="u-apellidos" name="u-apellidos" autocomplete="family-name" aria-describedby="error-u-apellidos">
+					<span class="mensaje-error" id="error-u-apellidos" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="u-correo">Correo electrónico</label>
+					<input type="email" id="u-correo" name="u-correo" autocomplete="email" aria-describedby="ayuda-u-correo error-u-correo">
+					<span class="ayuda" id="ayuda-u-correo">Solo @duoc.cl, @profesor.duoc.cl y @gmail.com</span>
+					<span class="mensaje-error" id="error-u-correo" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="u-rol">Perfil</label>
+					<select id="u-rol" name="u-rol" aria-describedby="error-u-rol">
+						<option value="">Selecciona un perfil</option>
+						<option value="Administrador">Administrador</option>
+						<option value="Vendedor">Vendedor</option>
+						<option value="Cliente">Cliente</option>
+					</select>
+					<span class="mensaje-error" id="error-u-rol" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="u-region">Región</label>
+					<select id="u-region" name="u-region" autocomplete="address-level1" aria-describedby="error-u-region">
+						<option value="">Selecciona una región</option>
+					</select>
+					<span class="mensaje-error" id="error-u-region" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="u-comuna">Comuna</label>
+					<select id="u-comuna" name="u-comuna" autocomplete="address-level2" disabled aria-describedby="error-u-comuna">
+						<option value="">Selecciona una comuna</option>
+					</select>
+					<span class="mensaje-error" id="error-u-comuna" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="u-direccion">Dirección</label>
+					<input type="text" id="u-direccion" name="u-direccion" autocomplete="street-address" aria-describedby="error-u-direccion">
+					<span class="mensaje-error" id="error-u-direccion" role="alert"></span>
+				</p>
+
+				<button class="boton" type="submit">Crear usuario</button>
+
+			</form>
+		</section>
+
+		<section class="bloque" id="seccion-productos" hidden aria-labelledby="titulo-productos">
+			<h2 id="titulo-productos">Productos</h2>
+			<p id="conteo-productos"></p>
+
+			<figure class="tabla-scroll">
+				<table class="tabla">
+					<caption>Inventario actual. Las filas destacadas están en el umbral de reposición o por debajo.</caption>
+					<thead>
+						<tr>
+							<th scope="col">Código</th>
+							<th scope="col">Producto</th>
+							<th scope="col">Categoría</th>
+							<th scope="col">Precio</th>
+							<th scope="col">Stock</th>
+							<th scope="col">Umbral</th>
+						</tr>
+					</thead>
+					<tbody id="tabla-productos"></tbody>
+				</table>
+			</figure>
+
+			<p class="confirmacion" id="confirmacion-producto" role="status"></p>
+
+			<h3>Nuevo producto</h3>
+
+			<form class="formulario" id="formulario-producto" novalidate>
+
+				<p class="campo-formulario">
+					<label for="p-codigo">Código</label>
+					<input type="text" id="p-codigo" name="p-codigo" aria-describedby="ayuda-p-codigo error-p-codigo">
+					<span class="ayuda" id="ayuda-p-codigo">Mínimo 3 caracteres. Ejemplo: MC011</span>
+					<span class="mensaje-error" id="error-p-codigo" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="p-nombre">Nombre del producto</label>
+					<input type="text" id="p-nombre" name="p-nombre" aria-describedby="error-p-nombre">
+					<span class="mensaje-error" id="error-p-nombre" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="p-descripcion">Descripción <span class="opcional">(opcional)</span></label>
+					<textarea id="p-descripcion" name="p-descripcion" rows="3" aria-describedby="ayuda-p-descripcion error-p-descripcion"></textarea>
+					<span class="ayuda" id="ayuda-p-descripcion">Hasta 500 caracteres.</span>
+					<span class="mensaje-error" id="error-p-descripcion" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="p-precio">Precio de venta</label>
+					<input type="text" id="p-precio" name="p-precio" inputmode="decimal" aria-describedby="ayuda-p-precio error-p-precio">
+					<span class="ayuda" id="ayuda-p-precio">En pesos. Admite decimales con punto. El 0 marca un producto gratis.</span>
+					<span class="mensaje-error" id="error-p-precio" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="p-stock">Stock</label>
+					<input type="text" id="p-stock" name="p-stock" inputmode="numeric" aria-describedby="ayuda-p-stock error-p-stock">
+					<span class="ayuda" id="ayuda-p-stock">Unidades enteras, sin decimales.</span>
+					<span class="mensaje-error" id="error-p-stock" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="p-stock-critico">Stock crítico <span class="opcional">(opcional)</span></label>
+					<input type="text" id="p-stock-critico" name="p-stock-critico" inputmode="numeric" aria-describedby="ayuda-p-stock-critico error-p-stock-critico">
+					<span class="ayuda" id="ayuda-p-stock-critico">Umbral que dispara la alerta de reposición.</span>
+					<span class="mensaje-error" id="error-p-stock-critico" role="alert"></span>
+				</p>
+
+				<p class="campo-formulario">
+					<label for="p-categoria">Categoría</label>
+					<select id="p-categoria" name="p-categoria" aria-describedby="error-p-categoria">
+						<option value="">Selecciona una categoría</option>
+					</select>
+					<span class="mensaje-error" id="error-p-categoria" role="alert"></span>
+				</p>
+
+				<button class="boton" type="submit">Guardar producto</button>
+
+			</form>
+		</section>
+
+	</main>
+	<footer class="pie">
+
+		<section class="pie-bloque">
+			<h2>Ferretería Los Maestros</h2>
+			<address>
+				Rengifo 320, La Serena, Región de Coquimbo<br>
+				Teléfono: <a href="tel:+56912345678">+56 9 1234 5678</a><br>
+				Correo: <a href="mailto:contacto@ferreterialosmaestros.cl">contacto@ferreterialosmaestros.cl</a>
+			</address>
+			<p>Lunes a viernes de 8:30 a 19:00 · Sábados de 9:00 a 14:00</p>
+		</section>
+
+		<section class="pie-bloque">
+			<h2>Navegación</h2>
+			<nav aria-label="Navegación del pie de página">
+				<ul class="pie-lista">
+					<li><a href="index.html">Inicio</a></li>
+					<li><a href="catalogo.html">Catálogo</a></li>
+					<li><a href="nosotros.html">Nosotros</a></li>
+					<li><a href="blogs.html">Blogs</a></li>
+					<li><a href="contacto.html">Contacto</a></li>
+					<li><a href="login.html">Iniciar sesión</a></li>
+					<li><a href="registro.html">Crear cuenta</a></li>
+					<li><a href="carrito.html">Carrito</a></li>
+				</ul>
+			</nav>
+		</section>
+
+		<section class="pie-bloque">
+			<h2>Síguenos</h2>
+			<ul class="pie-redes">
+				<li><a href="https://web.facebook.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+					<img src="assets/img/facebook-logo.png" alt="" width="20" height="20"> Facebook</a></li>
+				<li><a href="https://www.instagram.com/ferreteria_los_maestros" target="_blank" rel="noopener">
+					<img src="assets/img/instagram-logo.png" alt="" width="20" height="20"> Instagram</a></li>
+				<li><a href="https://www.linkedin.com/company/ferreteria-los-maestros" target="_blank" rel="noopener">
+					<img src="assets/img/linkedin-logo.png" alt="" width="20" height="20"> LinkedIn</a></li>
+				<li><a href="https://wa.me/56912345678" target="_blank" rel="noopener">
+					<img src="assets/img/whatsapp-logo.png" alt="" width="20" height="20"> WhatsApp</a></li>
+			</ul>
+		</section>
+
+		<p class="pie-copyright">&copy; <time datetime="2026">2026</time> Ferretería Los Maestros &middot; La Serena, Chile</p>
+
+	</footer>
+
+	<script src="assets/js/menu.js"></script>
+	<script src="assets/js/carrito.js"></script>
+	<script src="assets/js/validaciones.js"></script>
+	<script src="assets/js/regiones.js"></script>
+	<script src="assets/js/sesion.js"></script>
+	<script src="assets/js/admin.js"></script>
+
+</body>
+</html>

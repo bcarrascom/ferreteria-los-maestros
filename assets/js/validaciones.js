@@ -149,6 +149,23 @@ function telefonoTieneFormato(valor) {
 	return false;
 }
 
+// Number("") devuelve 0, así que el texto vacío se descarta antes de convertir.
+function esNumero(valor) {
+	if (valor.trim() === "") {
+		return false;
+	}
+
+	return !Number.isNaN(Number(valor));
+}
+
+function esEntero(valor) {
+	return Number.isInteger(Number(valor));
+}
+
+function esNegativo(valor) {
+	return Number(valor) < 0;
+}
+
 // --- Ayudas de interfaz ---
 
 // Lleva el foco al primer campo con error para que el usuario sepa dónde seguir.

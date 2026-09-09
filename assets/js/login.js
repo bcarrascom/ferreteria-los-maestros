@@ -33,6 +33,19 @@ function obtenerRol(valorCorreo) {
 	return "Cliente";
 }
 
+// Cada rol aterriza donde le corresponde. Los que no tienen panel van al inicio.
+const PAGINA_POR_ROL = {
+	"Administrador": "admin.html"
+};
+
+function paginaDeInicio(rol) {
+	if (PAGINA_POR_ROL[rol]) {
+		return PAGINA_POR_ROL[rol];
+	}
+
+	return "index.html";
+}
+
 function validarCorreo() {
 	if (estaVacio(correo.value)) {
 		mostrarError(correo, "Escribe tu correo para entrar.");
@@ -88,11 +101,11 @@ function iniciarSesion(evento) {
 	const rol = obtenerRol(correo.value);
 	guardarSesion(correo.value.trim().toLowerCase(), rol);
 
-	confirmacion.textContent = `Sesión iniciada como ${rol}. Te llevamos al inicio.`;
+	const destino = paginaDeInicio(rol);
+	confirmacion.textContent = `Sesión iniciada como ${rol}. Te llevamos a ${destino}.`;
 
-	// Cuando existan los paneles por rol, este destino dependerá del rol.
 	setTimeout(function () {
-		window.location.href = "index.html";
+		window.location.href = destino;
 	}, 1500);
 }
 
