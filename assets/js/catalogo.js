@@ -79,6 +79,12 @@ function crearTarjeta(producto, etiquetaTitulo) {
 	const precio = producto.precio_venta_clp.toLocaleString("es-CL");
 	const stock = describirStock(producto);
 
+	// Un producto agotado muestra el botón, pero deshabilitado.
+	let deshabilitado = "";
+	if (producto.stock === 0) {
+		deshabilitado = "disabled";
+	}
+
 	return `
 		<li>
 			<article class="producto">
@@ -88,6 +94,12 @@ function crearTarjeta(producto, etiquetaTitulo) {
 				<p class="producto-codigo">${producto.codigo} · ${producto.unidad}</p>
 				<p class="producto-precio">$${precio}</p>
 				<p class="producto-stock ${stock.clase}">${stock.texto}</p>
+				<p class="producto-accion">
+					<button class="boton boton-agregar" type="button"
+						data-codigo="${producto.codigo}"
+						data-stock="${producto.stock}"
+						${deshabilitado}>Agregar al carrito</button>
+				</p>
 			</article>
 		</li>
 	`;
@@ -124,4 +136,39 @@ function usarImagenPorDefecto() {
 			reemplazar();
 		}
 	});
+}
+
+// Delegación de eventos: un solo listener para los 170 botones de la página,
+// incluidos los que todavía no existían cuando se registró.
+document.addEventListener("click", function (evento) {
+	const boton = evento.target.closest(".boton-agregar");
+
+	if (!boton) {
+		return;
+	}
+
+	const codigo = boton.dataset.codigo;
+	const stock = Number(boton.dataset.stock);
+
+	if (agregarAlCarrito(codigo, stock)) {
+		avisarEnBoton(boton, "Agregado");
+	} else {
+		avisarEnBoton(boton, "Sin más stock");
+	}
+});
+
+// Cambia el texto del botón un momento y lo devuelve a su estado original.
+function avisarEnBoton(boton, mensaje) {
+	if (boton.dataset.ocupado === "si") {
+		return;
+	}
+
+	const textoOriginal = boton.textContent;
+	boton.textContent = mensaje;
+	boton.dataset.ocupado = "si";
+
+	setTimeout(function () {
+		boton.textContent = textoOriginal;
+		boton.dataset.ocupado = "no";
+	}, 1200);
 }

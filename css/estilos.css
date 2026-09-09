@@ -408,6 +408,114 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	color: var(--color-error);
 }
 
+.producto-accion {
+	margin: var(--espacio-xs) var(--espacio-xs) 0;
+}
+
+.boton-agregar {
+	width: 100%;
+	padding: 0.45rem 0.5rem;
+	font-size: 0.8rem;
+}
+
+/* Producto agotado: el botón se ve apagado y no responde */
+.boton-agregar:disabled {
+	border-color: var(--color-borde);
+	background: var(--color-borde);
+	color: var(--color-texto-suave);
+	cursor: not-allowed;
+	transform: none;
+}
+
+/* ---------- 6c. Página del carrito ---------- */
+
+.lista-carrito {
+	display: grid;
+	gap: var(--espacio-md);
+	margin-top: var(--espacio-md);
+}
+
+.linea-carrito {
+	display: grid;
+	grid-template-columns: 80px 1fr;
+	gap: 0 var(--espacio-md);
+	align-items: start;
+	padding: var(--espacio-md);
+	border: 1px solid var(--color-borde);
+	border-radius: var(--radio);
+	background: var(--color-fondo);
+	box-shadow: var(--sombra);
+}
+
+/* La imagen ocupa la primera columna y todas las filas de la tarjeta */
+.linea-carrito img {
+	grid-row: 1 / -1;
+	width: 80px;
+	aspect-ratio: 1 / 1;
+	object-fit: contain;
+	background: var(--color-fondo-alterno);
+	border-radius: var(--radio);
+}
+
+.linea-carrito h3 {
+	margin: 0 0 var(--espacio-xs);
+}
+
+.linea-detalle {
+	margin: 0 0 var(--espacio-xs);
+	font-size: 0.85rem;
+	color: var(--color-texto-suave);
+}
+
+.linea-cantidad {
+	display: flex;
+	align-items: center;
+	gap: var(--espacio-xs);
+	margin: 0 0 var(--espacio-xs);
+	font-size: 0.85rem;
+}
+
+.campo-cantidad {
+	width: 5rem;
+	padding: 0.35rem;
+	border: 1px solid var(--color-borde);
+	border-radius: var(--radio);
+	font: inherit;
+}
+
+.linea-tope {
+	color: var(--color-texto-suave);
+}
+
+.linea-subtotal {
+	margin: 0 0 var(--espacio-xs);
+	font-family: var(--fuente-titulos);
+	font-weight: 700;
+	color: var(--color-marca);
+}
+
+.linea-quitar {
+	margin: 0;
+}
+
+.carrito-total {
+	margin-top: var(--espacio-md);
+	padding-top: var(--espacio-sm);
+	border-top: 2px solid var(--color-borde);
+	font-family: var(--fuente-titulos);
+	font-size: 1.4rem;
+	font-weight: 700;
+	text-align: right;
+}
+
+/* Los botones del pie del carrito se envuelven en móvil en vez de desbordar */
+.bloque-pie {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--espacio-sm);
+	justify-content: center;
+}
+
 /* ---------- 7. Páginas de contenido ---------- */
 
 /* Franja de título de las páginas interiores */

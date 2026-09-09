@@ -4,10 +4,10 @@
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Consejos del oficio y datos útiles de Ferretería Los Maestros: cómo elegir cemento, qué taladro comprar y más.">
-	<meta name="keywords" content="blog ferretería, consejos, cemento, taladro, brocas, La Serena">
+	<meta name="description" content="Revisa los productos de tu carrito, ajusta las cantidades y confirma tu pedido en Ferretería Los Maestros.">
+	<meta name="keywords" content="carrito, pedido, compra en línea, ferretería, La Serena">
 
-	<title>Ferretería Los Maestros - Blogs</title>
+	<title>Ferretería Los Maestros - Mi carrito</title>
 
 	<link rel="icon" href="assets/img/logo.jpg" type="image/jpeg">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
 
 </head>
 
-<body data-pagina="blogs">
+<body data-pagina="carrito">
 	<!-- ============================================================
 	     CABECERA - bloque idéntico en las 14 páginas.
 	     No se modifica por página: el enlace activo lo resuelve el CSS
@@ -64,48 +64,27 @@
 
 	<main>
 
-		<section class="portada" aria-labelledby="titulo-blogs">
-			<h1 id="titulo-blogs">Blogs</h1>
-			<p>Consejos del oficio, datos útiles y novedades de la ferretería.</p>
+		<section class="portada" aria-labelledby="titulo-carrito">
+			<h1 id="titulo-carrito">Mi carrito</h1>
+			<p>Revisa las cantidades antes de confirmar. Preparamos tu pedido y te avisamos cuando puedas retirarlo.</p>
 		</section>
 
-		<section class="bloque" aria-labelledby="titulo-entradas">
-			<h2 id="titulo-entradas">Consejos del maestro</h2>
-			<p>Lo que más nos preguntan en el mesón, explicado para que llegues sabiendo qué llevar.</p>
+		<section class="bloque" aria-labelledby="titulo-productos">
+			<h2 id="titulo-productos">Productos en tu carrito</h2>
 
-			<ul class="grilla-blogs">
-				<li>
-					<article class="entrada">
-						<img src="assets/img/productos/MC001.jpg" alt="Saco de cemento gris de 25 kilos" loading="lazy">
-						<h3>Cómo elegir el cemento correcto</h3>
-						<p class="entrada-fecha"><time datetime="2026-08-18">18 de agosto de 2026</time></p>
-						<p>No todos los cementos sirven para lo mismo. La diferencia entre un gris corriente y uno de alta resistencia puede costarte una losa entera.</p>
-						<p class="entrada-pie"><a class="boton" href="blog-cemento.html">Leer el artículo</a></p>
-					</article>
-				</li>
-				<li>
-					<article class="entrada">
-						<img src="assets/img/productos/HE001.jpg" alt="Taladro percutor de 650 watts" loading="lazy">
-						<h3>Taladro percutor o atornillador</h3>
-						<p class="entrada-fecha"><time datetime="2026-09-01">1 de septiembre de 2026</time></p>
-						<p>Son dos herramientas distintas y mucha gente compra la equivocada. Te explicamos cuál necesitas según el material que vas a perforar.</p>
-						<p class="entrada-pie"><a class="boton" href="blog-taladro.html">Leer el artículo</a></p>
-					</article>
-				</li>
-			</ul>
-		</section>
+			<p id="estado-carrito">Cargando tu carrito…</p>
 
-		<section class="bloque" aria-labelledby="titulo-video">
-			<h2 id="titulo-video">Video recomendado</h2>
-			<p>Un video que solemos recomendar a quienes recién están armando su caja de herramientas.</p>
+			<ul class="lista-carrito" id="lista-carrito"></ul>
 
-			<figure class="figura">
-				<iframe src="https://www.youtube.com/embed/GCMaYo1NZsA"
-					title="Video recomendado sobre herramientas"
-					loading="lazy"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowfullscreen></iframe>
-			</figure>
+			<p class="carrito-total" id="carrito-total"></p>
+
+			<p class="confirmacion" id="confirmacion" role="status"></p>
+
+			<p class="bloque-pie" id="acciones-carrito" hidden>
+				<button class="boton" type="button" id="boton-pagar">Confirmar pedido</button>
+				<button class="boton boton-secundario" type="button" id="boton-vaciar">Vaciar carrito</button>
+				<a class="boton boton-secundario" href="catalogo.html">Seguir comprando</a>
+			</p>
 		</section>
 
 	</main>
@@ -160,6 +139,7 @@
 
 	<script src="assets/js/menu.js"></script>
 	<script src="assets/js/carrito.js"></script>
+	<script src="assets/js/carrito-vista.js"></script>
 
 </body>
 </html>
