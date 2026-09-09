@@ -68,6 +68,87 @@ function correoTieneDominioPermitido(valor) {
 	return false;
 }
 
+const DIGITOS = "0123456789";
+
+// Deja solo los números de un texto: "+56 9 1234 5678" -> "56912345678"
+function soloNumeros(valor) {
+	let resultado = "";
+
+	for (const caracter of valor) {
+		if (DIGITOS.includes(caracter)) {
+			resultado = resultado + caracter;
+		}
+	}
+
+	return resultado;
+}
+
+// RUT sin puntos ni guion, entre 7 y 9 caracteres. Ejemplo: 19011022K
+function rutTieneFormato(valor) {
+	const rut = valor.trim().toUpperCase();
+
+	if (rut.length < 7 || rut.length > 9) {
+		return false;
+	}
+
+	const cuerpo = rut.slice(0, -1);
+	const digito = rut.slice(-1);
+
+	for (const caracter of cuerpo) {
+		if (!DIGITOS.includes(caracter)) {
+			return false;
+		}
+	}
+
+	return DIGITOS.includes(digito) || digito === "K";
+}
+
+// Módulo 11: se multiplica cada dígito, de derecha a izquierda, por la serie
+// 2, 3, 4, 5, 6, 7 que se repite; el resto de la suma da el verificador.
+function calcularDigitoVerificador(cuerpo) {
+	let suma = 0;
+	let multiplicador = 2;
+
+	for (let posicion = cuerpo.length - 1; posicion >= 0; posicion--) {
+		suma = suma + Number(cuerpo[posicion]) * multiplicador;
+
+		if (multiplicador === 7) {
+			multiplicador = 2;
+		} else {
+			multiplicador = multiplicador + 1;
+		}
+	}
+
+	const resto = 11 - (suma % 11);
+
+	if (resto === 11) return "0";
+	if (resto === 10) return "K";
+	return String(resto);
+}
+
+function rutEsValido(valor) {
+	const rut = valor.trim().toUpperCase();
+	const cuerpo = rut.slice(0, -1);
+	const digitoIngresado = rut.slice(-1);
+
+	return digitoIngresado === calcularDigitoVerificador(cuerpo);
+}
+
+// Celular chileno: 9 dígitos partiendo en 9, con o sin el prefijo 56.
+function telefonoTieneFormato(valor) {
+	const numeros = soloNumeros(valor);
+
+	if (numeros.length === 9) {
+		return numeros.startsWith("9");
+	}
+
+	if (numeros.length === 11) {
+		return numeros.startsWith("569");
+	}
+
+	return false;
+}
+
 // --- Ayudas de interfaz ---
 
 // Lleva el foco al primer campo con error para que el usuario sepa dónde seguir.

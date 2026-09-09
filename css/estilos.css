@@ -459,6 +459,73 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	text-align: center;
 }
 
+/* El reset quitó las viñetas de todos los <ul>; esta clase las repone */
+.lista-simple {
+	max-width: 70ch;
+	margin: 0 0 var(--espacio-sm);
+	padding-left: var(--espacio-md);
+	list-style: disc;
+}
+
+.lista-simple li {
+	margin-bottom: var(--espacio-xs);
+}
+
+/* --- Entradas del blog --- */
+
+.grilla-blogs {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--espacio-md);
+	margin-top: var(--espacio-md);
+}
+
+.entrada {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	border: 1px solid var(--color-borde);
+	border-radius: var(--radio);
+	background: var(--color-fondo);
+	box-shadow: var(--sombra);
+	overflow: hidden;
+	transition: box-shadow var(--transicion), transform var(--transicion);
+}
+
+.entrada:hover {
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+	transform: translateY(-3px);
+}
+
+.entrada img {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	padding: var(--espacio-sm);
+	object-fit: contain;
+	background: var(--color-fondo-alterno);
+}
+
+.entrada h3,
+.entrada p {
+	margin-left: var(--espacio-md);
+	margin-right: var(--espacio-md);
+}
+
+.entrada h3 {
+	margin-top: var(--espacio-md);
+}
+
+.entrada-fecha {
+	font-size: 0.8rem;
+	color: var(--color-texto-suave);
+}
+
+/* margin-top auto empuja el botón al fondo: todas las tarjetas lo alinean igual */
+.entrada-pie {
+	margin-top: auto;
+	margin-bottom: var(--espacio-md);
+}
+
 /* Línea de tiempo: la raya es el borde izquierdo de la lista */
 .linea-tiempo {
 	list-style: none;
@@ -676,6 +743,36 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	border: 0;
 }
 
+/* fieldset agrupa campos relacionados; legend es el título de ese grupo */
+.grupo-campos {
+	margin: 0 0 var(--espacio-lg);
+	padding: var(--espacio-md);
+	border: 1px solid var(--color-borde);
+	border-radius: var(--radio);
+}
+
+.grupo-campos legend {
+	padding: 0 var(--espacio-xs);
+	font-family: var(--fuente-titulos);
+	font-weight: 600;
+	color: var(--color-marca);
+}
+
+.grupo-campos .campo-formulario:last-child {
+	margin-bottom: 0;
+}
+
+.opcional {
+	font-weight: 400;
+	color: var(--color-texto-suave);
+}
+
+.campo-formulario select:disabled {
+	background: var(--color-fondo-alterno);
+	color: var(--color-texto-suave);
+	cursor: not-allowed;
+}
+
 /* Acción secundaria dentro de un formulario: es un botón, no un enlace */
 .boton-texto {
 	justify-self: start;
@@ -779,7 +876,8 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	.grilla-productos,
 	.grilla-equipo,
 	.grilla-clientes,
-	.grilla-contacto {
+	.grilla-contacto,
+	.grilla-blogs {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
