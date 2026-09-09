@@ -668,6 +668,50 @@ body[data-pagina="contacto"]  .menu-enlace[href="contacto.html"] {
 	border: 0;
 }
 
+/* Acción secundaria dentro de un formulario: es un botón, no un enlace */
+.boton-texto {
+	justify-self: start;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--color-marca);
+	font: inherit;
+	font-size: 0.85rem;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.boton-texto:hover {
+	color: var(--color-marca-oscuro);
+}
+
+.cuentas-demo {
+	max-width: 40rem;
+	margin-top: var(--espacio-lg);
+	padding: var(--espacio-sm);
+	border: 1px solid var(--color-borde);
+	border-radius: var(--radio);
+	background: var(--color-fondo-alterno);
+}
+
+.cuentas-demo summary {
+	font-family: var(--fuente-titulos);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.cuentas-demo dl {
+	margin: var(--espacio-sm) 0 0;
+}
+
+.cuentas-demo dt {
+	font-weight: 700;
+}
+
+.cuentas-demo dd {
+	margin: 0 0 var(--espacio-xs);
+}
+
 /* ============================================================
    10. Tableta - a partir de 768 px
    ============================================================ */

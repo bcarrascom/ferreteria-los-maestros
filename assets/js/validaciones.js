@@ -41,6 +41,11 @@ function superaLargo(valor, maximo) {
 	return valor.trim().length > maximo;
 }
 
+// Para contraseñas: no se recorta, porque un espacio puede ser parte de la clave.
+function largoFueraDeRango(valor, minimo, maximo) {
+	return valor.length < minimo || valor.length > maximo;
+}
+
 function correoTieneFormato(valor) {
 	const partes = valor.trim().split("@");
 
