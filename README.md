@@ -1,16 +1,43 @@
-# React + Vite
+# Ferretería Los Maestros — versión React
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Versión en React del sitio de **Ferretería Los Maestros**, negocio familiar de
+Rengifo 320, La Serena, Región de Coquimbo.
 
-Currently, two official plugins are available:
+Corresponde a la Experiencia 2 (EA2) del ramo DSY1104 Desarrollo Fullstack II,
+Duoc UC. El proyecto del Parcial 1 (HTML + CSS + JavaScript vanilla) vive en un
+repositorio aparte: son dos evidencias distintas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+- React 19
+- Vite 8 (servidor de desarrollo y empaquetado)
+- React Bootstrap + Bootstrap 5 (sistema visual y responsivo)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Cómo levantarlo
 
-## Expanding the Oxlint configuration
+Requiere Node 22 o superior.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+npm install     # instala las dependencias en node_modules
+npm run dev     # servidor de desarrollo en http://localhost:5173
+npm run build   # versión optimizada para producción en dist/
+npm run preview # sirve localmente lo que generó build
+```
+
+## Estructura
+
+```
+public/img/        imágenes servidas sin procesar (logo y productos)
+src/main.jsx       punto de entrada: monta App en el div#root
+src/App.jsx        componente principal, compone la página
+src/index.css      estilos propios de la marca
+src/components/    piezas reutilizables (encabezado, navegación, tarjetas)
+src/pages/         vistas completas (catálogo)
+src/data/          datos simulados, separados de la presentación
+```
+
+## Alcance actual
+
+Catálogo de 85 productos en 9 categorías, filtro por categoría y carrito con
+cantidades persistido en `localStorage`. Las rutas, los formularios controlados
+y las vistas administrativas llegan en la siguiente experiencia.

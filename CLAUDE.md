@@ -17,7 +17,7 @@ revisarlo con `git stash show -p` y copiarlo a mano.
 ## Estado actual
 
 - [x] Paso 1 — Proyecto Vite + React creado e instalado (`npm create vite`, `npm install`)
-- [ ] Paso 2 — Limpiar plantilla de ejemplo de Vite (§4.2 de la guía)
+- [x] Paso 2 — Limpiar plantilla de ejemplo de Vite (§4.2 de la guía)
 - [ ] Paso 3 — Instalar React Bootstrap
 - [ ] Paso 4 — Componentes base: Encabezado, Navegacion, Hero, PiePagina
 - [ ] Paso 5 — `src/data/productos.js` con los 85 productos
