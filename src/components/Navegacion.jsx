@@ -16,4 +16,6 @@ function Navegacion({ cantidadCarrito }) {
   );
 }
 
+/* Para que la navegación sea parte del encabezado, lo exportamos para luego
+importarlo al componente de encabezado, no a App.jsx */
 export default Navegacion;
