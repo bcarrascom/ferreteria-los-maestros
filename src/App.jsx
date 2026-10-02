@@ -3,7 +3,8 @@ import Encabezado from "./components/Encabezado";
 function App() {
   return (
     <>
-      <Encabezado />
+      {/* El 0 es provisorio: en el Paso 8 lo reemplaza el total del carrito. */}
+      <Encabezado cantidadCarrito={0} />
 
       <main className="container py-5">
         <h1>Catálogo en construcción</h1>
