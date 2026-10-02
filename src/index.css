@@ -1,2 +1,52 @@
 /* Estilos propios de Ferretería Los Maestros.
    Complementan a Bootstrap, que se importa antes en main.jsx. */
+
+:root {
+  /* Colores y tipografías de la marca, heredados del Parcial 1 */
+  --naranjo: #d1490b;
+  --naranjo-rgb: 209, 73, 11;
+  --naranjo-hover: #b23e09;
+  --naranjo-activo: #a73a09;
+
+  /* Variables de Bootstrap que sí leen nuestro color */
+  --bs-primary: var(--naranjo);
+  --bs-primary-rgb: var(--naranjo-rgb);
+
+  /* Tipografía del cuerpo */
+  --bs-body-font-family: "Lato", system-ui, sans-serif;
+
+  /* Enlaces con el naranjo en vez del azul por defecto */
+  --bs-link-color: var(--naranjo);
+  --bs-link-color-rgb: var(--naranjo-rgb);
+  --bs-link-hover-color: var(--naranjo-hover);
+}
+
+/* Títulos en Poppins. Incluye las clases .h1-.h6 porque el encabezado
+   usa <p className="h4">, que no es una etiqueta de título. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: "Poppins", system-ui, sans-serif;
+}
+
+/* .btn-primary no lee --bs-primary: trae sus propias variables con el
+   azul ya compilado. Hay que pisarlas una por una. */
+.btn-primary {
+  --bs-btn-bg: var(--naranjo);
+  --bs-btn-border-color: var(--naranjo);
+  --bs-btn-hover-bg: var(--naranjo-hover);
+  --bs-btn-hover-border-color: var(--naranjo-hover);
+  --bs-btn-active-bg: var(--naranjo-activo);
+  --bs-btn-active-border-color: var(--naranjo-activo);
+  --bs-btn-disabled-bg: var(--naranjo);
+  --bs-btn-disabled-border-color: var(--naranjo);
+}
