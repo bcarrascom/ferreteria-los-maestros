@@ -50,3 +50,31 @@ h6,
   --bs-btn-disabled-bg: var(--naranjo);
   --bs-btn-disabled-border-color: var(--naranjo);
 }
+
+/* Hero. Portado del Parcial 1: Bootstrap no trae un componente equivalente.
+   El degradado oscuro va sobre la foto para que el texto blanco se lea. */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 60vh;
+  padding: 2.5rem 1rem;
+  color: #fff;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url("/img/herramientas-titulo.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.hero h1 {
+  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hero p {
+  max-width: 45ch;
+  font-size: 1.05rem;
+}
