@@ -1,4 +1,4 @@
-import productos from "../data/productos.json";
+import { buscarProductoPorCodigo } from "../utils/productos";
 import TarjetaProducto from "./tarjetaProducto";
 
 // Mismos códigos que tenía el index.html del Parcial 1.
@@ -9,7 +9,7 @@ function buscarDestacados() {
   const encontrados = [];
 
   codigosDestacados.forEach((codigo) => {
-    const producto = productos.find((p) => p.codigo === codigo);
+    const producto = buscarProductoPorCodigo(codigo);
 
     if (producto) {
       encontrados.push(producto);
