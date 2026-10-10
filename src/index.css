@@ -78,3 +78,34 @@ h6,
   max-width: 45ch;
   font-size: 1.05rem;
 }
+
+/* Pie de página. Los colores son los exactos del Parcial 1;
+   la grilla de tres columnas la pone Bootstrap. */
+.pie {
+  background: #1c2126;
+  color: #c8ced4;
+}
+
+.pie h2 {
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.pie a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.pie a:hover {
+  color: var(--naranjo);
+}
+
+.pie address {
+  font-style: normal;
+}
+
+.pie-copyright {
+  border-top: 1px solid #33383e;
+  font-size: 0.85rem;
+}
