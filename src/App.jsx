@@ -1,6 +1,7 @@
 import Encabezado from "./components/Encabezado";
 import Hero from "./components/Hero";
 import PiePagina from "./components/PiePagina";
+import ProductosDestacados from "./components/ProductosDestacados";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
 
       <main>
         <Hero />
+        <ProductosDestacados />
 
         <section className="container py-5">
           <h2>Catálogo en construcción</h2>
