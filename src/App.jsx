@@ -1,5 +1,6 @@
 import Encabezado from "./components/Encabezado";
 import Hero from "./components/Hero";
+import PiePagina from "./components/PiePagina";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           </p>
         </section>
       </main>
+
+      <PiePagina />
     </>
   );
 }
