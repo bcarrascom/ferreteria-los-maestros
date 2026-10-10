@@ -79,6 +79,14 @@ h6,
   font-size: 1.05rem;
 }
 
+/* Tarjeta de producto. Las fotos vienen de distintos tamaños:
+   se fuerzan cuadradas y "contain" las muestra enteras, sin recortar. */
+.tarjeta-producto img {
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  padding: 1rem;
+}
+
 /* Pie de página. Los colores son los exactos del Parcial 1;
    la grilla de tres columnas la pone Bootstrap. */
 .pie {
