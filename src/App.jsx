@@ -12,15 +12,7 @@ function App() {
       <main>
         <Hero />
         <ProductosDestacados />
-
-        <section className="container py-5">
-          <h2>Catálogo en construcción</h2>
-          <p className="lead">
-            Los demás componentes se agregan en los siguientes bloques.
-          </p>
-        </section>
       </main>
-
       <PiePagina />
     </>
   );
