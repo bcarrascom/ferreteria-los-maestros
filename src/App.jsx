@@ -1,7 +1,8 @@
+import { Route, Routes } from "react-router-dom";
 import Encabezado from "./components/Encabezado";
-import Hero from "./components/Hero";
 import PiePagina from "./components/PiePagina";
-import ProductosDestacados from "./components/ProductosDestacados";
+import Catalogo from "./pages/Catalogo";
+import Inicio from "./pages/Inicio";
 
 function App() {
   return (
@@ -10,9 +11,12 @@ function App() {
       <Encabezado cantidadCarrito={0} />
 
       <main>
-        <Hero />
-        <ProductosDestacados />
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route path="/catalogo" element={<Catalogo />} />
+        </Routes>
       </main>
+
       <PiePagina />
     </>
   );
