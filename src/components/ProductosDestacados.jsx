@@ -1,6 +1,6 @@
 import { buscarProductoPorCodigo } from "../utils/productos";
 import GrillaProductos from "./GrillaProductos";
-import { Link } from "react-router-dom";    // enrutamiento
+import { Link } from "react-router-dom";    // enrutamiento sin recargar la pagina
 
 
 // Mismos códigos que tenía el index.html del Parcial 1.
