@@ -51,6 +51,17 @@ h6,
   --bs-btn-disabled-border-color: var(--naranjo);
 }
 
+/* Igual que .btn-primary: el borde y el texto vienen en azul compilado. */
+.btn-outline-primary {
+  --bs-btn-color: var(--naranjo);
+  --bs-btn-border-color: var(--naranjo);
+  --bs-btn-hover-bg: var(--naranjo);
+  --bs-btn-hover-border-color: var(--naranjo);
+  --bs-btn-active-bg: var(--naranjo-activo);
+  --bs-btn-active-border-color: var(--naranjo-activo);
+}
+
+
 /* Hero. Portado del Parcial 1: Bootstrap no trae un componente equivalente.
    El degradado oscuro va sobre la foto para que el texto blanco se lea. */
 .hero {
