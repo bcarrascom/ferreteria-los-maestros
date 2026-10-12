@@ -30,3 +30,27 @@ export function agregarAlCarrito(carrito, producto) {
     return item;
   });
 }
+
+// Reglas 2 y 4: no supera el stock, y bajar de 1 quita el producto.
+export function cambiarCantidad(carrito, producto, cantidadNueva) {
+  if (cantidadNueva < 1) {
+    return quitarDelCarrito(carrito, producto.codigo);
+  }
+
+  let cantidadFinal = cantidadNueva;
+
+  if (cantidadNueva > producto.stock) {
+    cantidadFinal = producto.stock;
+  }
+
+  return carrito.map((item) => {
+    if (item.codigo === producto.codigo) {
+      return { ...item, cantidad: cantidadFinal };
+    }
+    return item;
+  });
+}
+
+export function quitarDelCarrito(carrito, codigo) {
+  return carrito.filter((item) => item.codigo !== codigo);
+}
