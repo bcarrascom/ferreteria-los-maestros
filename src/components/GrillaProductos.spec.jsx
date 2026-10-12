@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import GrillaProductos from "./GrillaProductos";
 
 // Datos de prueba: no dependen del JSON real.
@@ -9,7 +10,11 @@ const productosDePrueba = [
 
 describe("GrillaProductos", () => {
   it("muestra una tarjeta por cada producto", () => {
-    render(<GrillaProductos productos={productosDePrueba} />);
+    render(
+      <MemoryRouter>
+        <GrillaProductos productos={productosDePrueba} />
+      </MemoryRouter>
+    );
     expect(screen.getAllByRole("article")).toHaveLength(2);
   });
 });
