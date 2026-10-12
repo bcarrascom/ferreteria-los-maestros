@@ -1,11 +1,13 @@
 import { Badge, Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+
 
 function Navegacion({ cantidadCarrito }) {
   return (
     <Nav as="nav" aria-label="Navegación principal" className="ms-auto">
-      <Nav.Link href="#inicio">Inicio</Nav.Link>
-      <Nav.Link href="#catalogo">Catálogo</Nav.Link>
-      <Nav.Link href="#carrito">
+      <Nav.Link as={NavLink} to="/" end>Inicio</Nav.Link>
+      <Nav.Link as={NavLink} to="/catalogo">Catálogo</Nav.Link>
+      <Nav.Link as={NavLink} to="/carrito">
         Carrito{" "}
         <Badge bg="primary">
           {cantidadCarrito}
