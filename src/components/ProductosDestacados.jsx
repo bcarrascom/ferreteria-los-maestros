@@ -1,5 +1,6 @@
 import { buscarProductoPorCodigo } from "../utils/productos";
-import TarjetaProducto from "./tarjetaProducto";
+import GrillaProductos from "./GrillaProductos";
+
 
 // Mismos códigos que tenía el index.html del Parcial 1.
 const codigosDestacados = ["MC001", "PT001", "HM001", "MC009"];
@@ -29,14 +30,7 @@ function ProductosDestacados() {
       <h2 id="titulo-destacados" className="mb-4">
         Productos destacados
       </h2>
-
-      <ul className="row g-4 list-unstyled">
-        {destacados.map((producto) => (
-          <li key={producto.codigo} className="col-12 col-sm-6 col-lg-3">
-            <TarjetaProducto producto={producto} />
-          </li>
-        ))}
-      </ul>
+      <GrillaProductos productos={destacados} />
     </section>
   );
 }
