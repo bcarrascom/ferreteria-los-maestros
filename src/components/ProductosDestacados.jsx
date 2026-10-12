@@ -1,5 +1,6 @@
 import { buscarProductoPorCodigo } from "../utils/productos";
 import GrillaProductos from "./GrillaProductos";
+import { Link } from "react-router-dom";    // enrutamiento
 
 
 // Mismos códigos que tenía el index.html del Parcial 1.
@@ -31,6 +32,11 @@ function ProductosDestacados() {
         Productos destacados
       </h2>
       <GrillaProductos productos={destacados} />
+      <p className="text-center mt-4 mb-0">
+        <Link to="/productos" className="btn btn-primary">
+          Ver catálogo completo
+        </Link>
+      </p>    
     </section>
   );
 }
