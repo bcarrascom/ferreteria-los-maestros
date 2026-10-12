@@ -54,3 +54,30 @@ export function cambiarCantidad(carrito, producto, cantidadNueva) {
 export function quitarDelCarrito(carrito, codigo) {
   return carrito.filter((item) => item.codigo !== codigo);
 }
+
+// Suma las cantidades: 2 cementos + 1 pintura = 3.
+export function contarProductos(carrito) {
+  let total = 0;
+
+  carrito.forEach((item) => {
+    total = total + item.cantidad;
+  });
+
+  return total;
+}
+
+// Suma precio por cantidad. Salta los códigos que ya no existen.
+export function calcularTotal(carrito) {
+  let total = 0;
+
+  carrito.forEach((item) => {
+    const producto = buscarProductoPorCodigo(item.codigo);
+
+    if (producto) {
+      total = total + producto.precio_venta_clp * item.cantidad;
+    }
+  });
+
+  return total;
+}
+
