@@ -13,6 +13,7 @@ describe("App", () => {
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Ferretería Los Maestros");
   });
 
+  
   it("el botón lleva al catálogo y sube al inicio de la ventana", async () => {
     render(
       <MemoryRouter>
@@ -26,4 +27,18 @@ describe("App", () => {
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Catálogo");
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
+
+  
+  it("al hacer clic en una tarjeta abre su detalle", async () => {
+    render(
+      <MemoryRouter initialEntries={["/catalogo"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    await userEvent.click(screen.getByRole("link", { name: "Cemento Polpaico gris 25 kg" }));
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Cemento Polpaico gris 25 kg");
+  });
+
 });
