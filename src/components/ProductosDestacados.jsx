@@ -33,7 +33,7 @@ function ProductosDestacados() {
       </h2>
       <GrillaProductos productos={destacados} />
       <p className="text-center mt-4 mb-0">
-        <Link to="/productos" className="btn btn-primary">
+        <Link to="/catalogo" className="btn btn-primary">
           Ver catálogo completo
         </Link>
       </p>    

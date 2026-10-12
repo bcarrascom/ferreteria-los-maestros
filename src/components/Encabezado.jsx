@@ -1,4 +1,5 @@
 import { Container, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Navegacion from "./Navegacion";
 /* Para que la navegación sea parte del encabezado, la importamos aca directamente
 en vez de importarla a App.jsx */
@@ -14,7 +15,7 @@ function Encabezado({ cantidadCarrito }) {
       className="py-3 border-bottom border-3 border-primary"
     >
       <Container>
-        <Navbar.Brand href="#inicio" className="d-flex align-items-center gap-3">
+        <Navbar.Brand as={Link} to="/"className="d-flex align-items-center gap-3">
           <img
             src="/img/logo.jpg"
             alt="Logo de Ferretería Los Maestros"
