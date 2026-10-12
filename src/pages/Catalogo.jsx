@@ -1,15 +1,25 @@
-import GrillaProductos from "../components/GrillaProductos";
-import { obtenerProductos } from "../utils/productos";
+import SeccionCategoria from "../components/SeccionCategoria";
+import {
+  obtenerCategorias,
+  obtenerProductosPorCategoria,
+} from "../utils/productos";
 
 function Catalogo() {
-  const productos = obtenerProductos();
+  const categorias = obtenerCategorias();
 
   return (
     <section className="container py-5" aria-labelledby="titulo-catalogo">
       <h1 id="titulo-catalogo" className="mb-4">
         Catálogo
       </h1>
-      <GrillaProductos productos={productos} />
+
+      {categorias.map((categoria) => (
+        <SeccionCategoria
+          key={categoria}
+          categoria={categoria}
+          productos={obtenerProductosPorCategoria(categoria)}
+        />
+      ))}
     </section>
   );
 }
