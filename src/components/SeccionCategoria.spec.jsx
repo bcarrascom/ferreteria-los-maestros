@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import SeccionCategoria from "./SeccionCategoria";
 
 const productosDePrueba = [
@@ -9,12 +10,20 @@ const productosDePrueba = [
 
 describe("SeccionCategoria", () => {
   it("muestra el nombre de la categoría como título", () => {
-    render(<SeccionCategoria categoria="Pinturas" productos={productosDePrueba} />);
+    render(
+      <MemoryRouter>
+        <SeccionCategoria categoria="Pinturas" productos={productosDePrueba} />
+      </MemoryRouter>
+    );
     expect(screen.getByRole("heading", { name: "Pinturas" })).toBeInTheDocument();
   });
 
   it("muestra una tarjeta por cada producto recibido", () => {
-    render(<SeccionCategoria categoria="Pinturas" productos={productosDePrueba} />);
+    render(
+      <MemoryRouter>
+        <SeccionCategoria categoria="Pinturas" productos={productosDePrueba} />
+      </MemoryRouter>
+    );
     expect(screen.getAllByRole("article")).toHaveLength(3);
   });
 });
