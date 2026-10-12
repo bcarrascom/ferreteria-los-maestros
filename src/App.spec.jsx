@@ -1,0 +1,29 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
+import App from "./App";
+
+describe("App", () => {
+  it("parte en el inicio", () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Ferretería Los Maestros");
+  });
+
+  it("el botón lleva al catálogo y sube al inicio de la ventana", async () => {
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+    window.scrollTo.mockClear();
+
+    await userEvent.click(screen.getByRole("link", { name: "Ver catálogo completo" }));
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Catálogo");
+    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+  });
+});
