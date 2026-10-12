@@ -23,9 +23,6 @@ function DetalleProducto() {
 
   return (
     <section className="container py-5" aria-labelledby="titulo-producto">
-      <p>
-        <Link to="/catalogo">← Volver al catálogo</Link>
-      </p>
 
       <div className="row g-5 align-items-center">
         <div className="col-12 col-md-6">
