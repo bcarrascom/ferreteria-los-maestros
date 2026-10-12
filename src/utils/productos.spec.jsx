@@ -3,6 +3,7 @@ import {
   buscarProductoPorCodigo,
   obtenerCategorias,
   obtenerProductosPorCategoria,
+  obtenerProductos,
 } from "./productos";
 
 
@@ -30,6 +31,12 @@ describe("obtenerProductosPorCategoria", () => {
 
     productos.forEach((producto) => {
       expect(producto.categoria).toBe("Seguridad");
+    });
+  });
+
+describe("obtenerProductos", () => {
+  it("devuelve los 85 productos", () => {
+      expect(obtenerProductos()).toHaveLength(85);
     });
   });
 });
