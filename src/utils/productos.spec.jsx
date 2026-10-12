@@ -33,10 +33,11 @@ describe("obtenerProductosPorCategoria", () => {
       expect(producto.categoria).toBe("Seguridad");
     });
   });
+});
+
 
 describe("obtenerProductos", () => {
   it("devuelve los 85 productos", () => {
       expect(obtenerProductos()).toHaveLength(85);
-    });
   });
 });
