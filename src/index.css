@@ -98,6 +98,14 @@ h6,
   padding: 1rem;
 }
 
+.tarjeta-producto img,
+.detalle-producto-imagen {
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  padding: 1rem;
+}
+
+
 /* Pie de página. Los colores son los exactos del Parcial 1;
    la grilla de tres columnas la pone Bootstrap. */
 .pie {
