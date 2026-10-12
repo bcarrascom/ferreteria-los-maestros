@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function PiePagina() {
   return (
     <footer className="pie mt-5 py-5">
@@ -25,13 +27,13 @@ function PiePagina() {
             <nav aria-label="Navegación del pie de página">
               <ul className="list-unstyled d-grid gap-2 mb-0">
                 <li>
-                  <a href="#inicio">Inicio</a>
+                  <Link to="/">Inicio</Link>
                 </li>
                 <li>
-                  <a href="#catalogo">Catálogo</a>
+                  <Link to="/catalogo">Catálogo</Link>
                 </li>
                 <li>
-                  <a href="#carrito">Carrito</a>
+                  <Link to="/carrito">Carrito</Link>
                 </li>
               </ul>
             </nav>
