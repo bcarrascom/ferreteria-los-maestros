@@ -1,3 +1,5 @@
+import { useState } from "react";
+import FiltroCategorias from "../components/FiltroCategorias";
 import SeccionCategoria from "../components/SeccionCategoria";
 import {
   obtenerCategorias,
@@ -6,6 +8,14 @@ import {
 
 function Catalogo() {
   const categorias = obtenerCategorias();
+  const [categoriaActiva, setCategoriaActiva] = useState("Todas");
+
+  // Con "Todas" se muestran las 9; si no, solo la elegida.
+  let categoriasVisibles = categorias;
+
+  if (categoriaActiva !== "Todas") {
+    categoriasVisibles = [categoriaActiva];
+  }
 
   return (
     <section className="container py-5" aria-labelledby="titulo-catalogo">
@@ -13,7 +23,13 @@ function Catalogo() {
         Catálogo
       </h1>
 
-      {categorias.map((categoria) => (
+      <FiltroCategorias
+        categorias={categorias}
+        categoriaActiva={categoriaActiva}
+        alCambiarCategoria={setCategoriaActiva}
+      />
+
+      {categoriasVisibles.map((categoria) => (
         <SeccionCategoria
           key={categoria}
           categoria={categoria}
