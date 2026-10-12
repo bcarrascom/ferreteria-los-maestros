@@ -14,6 +14,18 @@ describe("Catalogo", () => {
     await userEvent.click(screen.getByRole("button", { name: "Pinturas" }));
 
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(1);
+    
+  it("vuelve a mostrar todo al elegir Todas", async () => {
+    render(<Catalogo />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Pinturas" }));
+    await userEvent.click(screen.getByRole("button", { name: "Todas" }));
+
+    expect(screen.getAllByRole("article")).toHaveLength(85);
+  });
+
+
     expect(screen.getAllByRole("article")).toHaveLength(9);
+
   });
 });
