@@ -2,8 +2,9 @@ import { Link, useParams } from "react-router-dom";
 import { formatearPrecio } from "../utils/precio";
 import { buscarProductoPorCodigo } from "../utils/productos";
 
+
 // Página de un solo producto. El código viene en la URL: /catalogo/MC001
-function DetalleProducto() {
+function DetalleProducto({ alAgregar }) {
   const parametros = useParams(); // devuelve un objeto con los parámetros de la URL
   const producto = buscarProductoPorCodigo(parametros.codigo);
 
@@ -45,7 +46,7 @@ function DetalleProducto() {
             {formatearPrecio(producto.precio_venta_clp)}
           </p>
 
-          <dl className="row mb-0">
+          <dl className="row mb-4">
             <dt className="col-5">Código</dt>
             <dd className="col-7">{producto.codigo}</dd>
             <dt className="col-5">Unidad de venta</dt>
@@ -53,6 +54,15 @@ function DetalleProducto() {
             <dt className="col-5">Stock disponible</dt>
             <dd className="col-7">{producto.stock}</dd>
           </dl>
+          <button
+            type="button"
+            className="btn btn-primary btn-lg"
+            disabled={producto.stock === 0}
+            onClick={() => alAgregar(producto)}
+          >
+            Agregar al carrito
+          </button>
+
         </div>
       </div>
     </section>

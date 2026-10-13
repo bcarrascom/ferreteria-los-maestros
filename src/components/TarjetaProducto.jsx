@@ -2,7 +2,7 @@ import { formatearPrecio } from "../utils/precio";
 import { Link } from "react-router-dom";
 
 // Muestra un producto. Recibe el objeto completo por props.
-function TarjetaProducto({ producto }) {
+function TarjetaProducto({ producto, alAgregar }) {
   // Las imágenes se llaman igual que el código: MC001.jpg, PT001.jpg...
   const imagen = `/img/productos/${producto.codigo}.jpg`;
 
@@ -13,7 +13,7 @@ function TarjetaProducto({ producto }) {
         src={imagen}
         alt={producto.nombre_producto}
       />
-      <div className="card-body">
+      <div className="card-body d-flex flex-column">
       <h3 className="h6 card-title">
         <Link
           to={`/catalogo/${producto.codigo}`}
@@ -26,6 +26,16 @@ function TarjetaProducto({ producto }) {
         <p className="card-text fw-bold">
           {formatearPrecio(producto.precio_venta_clp)}
         </p>
+        <button
+          type="button"
+          className="btn btn-primary btn-sm mt-auto position-relative z-2"
+          aria-label={`Agregar ${producto.nombre_producto} al carrito`}
+          disabled={producto.stock === 0}
+          onClick={() => alAgregar(producto)}
+        >
+          Agregar al carrito
+        </button>
+
       </div>
     </article>
   );
