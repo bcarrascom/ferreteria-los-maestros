@@ -23,7 +23,7 @@ function buscarDestacados() {
   return encontrados;
 }
 
-function ProductosDestacados() {
+function ProductosDestacados({ alAgregar }) {
   const destacados = buscarDestacados();
 
   return (
@@ -31,7 +31,7 @@ function ProductosDestacados() {
       <h2 id="titulo-destacados" className="mb-4">
         Productos destacados
       </h2>
-      <GrillaProductos productos={destacados} />
+      <GrillaProductos productos={destacados} alAgregar={alAgregar} />
       <p className="text-center mt-4 mb-0">
         <Link to="/catalogo" className="btn btn-primary">
           Ver catálogo completo
