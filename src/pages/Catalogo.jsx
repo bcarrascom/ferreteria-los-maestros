@@ -6,7 +6,7 @@ import {
   obtenerProductosPorCategoria,
 } from "../utils/productos";
 
-function Catalogo() {
+function Catalogo({ alAgregar }) {
   const categorias = obtenerCategorias();
   const [categoriaActiva, setCategoriaActiva] = useState("Todas");
 
@@ -34,6 +34,7 @@ function Catalogo() {
           key={categoria}
           categoria={categoria}
           productos={obtenerProductosPorCategoria(categoria)}
+          alAgregar={alAgregar}
         />
       ))}
     </section>

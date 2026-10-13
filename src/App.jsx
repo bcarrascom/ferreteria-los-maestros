@@ -13,7 +13,7 @@ import Inicio from "./pages/Inicio";
 function App() {
 
     // El carrito vive aquí porque lo usan el encabezado y todas las páginas.
-  const [carrito, setCarrito] = useState([]);|
+  const [carrito, setCarrito] = useState([]);
 
   function agregarProducto(producto) {
     setCarrito(agregarAlCarrito(carrito, producto));
