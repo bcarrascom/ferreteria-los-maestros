@@ -25,14 +25,17 @@ function App() {
       <VolverArriba />
       <Encabezado cantidadCarrito={contarProductos(carrito)} />
 
-      <main>
-        <Route path="/" element={<Inicio alAgregar={agregarProducto} />} />
-        <Route path="/catalogo" element={<Catalogo alAgregar={agregarProducto} />} />
-        <Route
-          path="/catalogo/:codigo"
-          element={<DetalleProducto alAgregar={agregarProducto} />}
-        />
+            <main>
+        <Routes>
+          <Route path="/" element={<Inicio alAgregar={agregarProducto} />} />
+          <Route path="/catalogo" element={<Catalogo alAgregar={agregarProducto} />} />
+          <Route
+            path="/catalogo/:codigo"
+            element={<DetalleProducto alAgregar={agregarProducto} />}
+          />
+        </Routes>
       </main>
+
 
       <PiePagina />
     </>
