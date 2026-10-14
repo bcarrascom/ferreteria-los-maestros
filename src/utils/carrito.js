@@ -81,3 +81,24 @@ export function calcularTotal(carrito) {
   return total;
 }
 
+
+const CLAVE_CARRITO = "carrito";
+
+// Lee el carrito guardado en el navegador. Si no hay o está dañado, parte vacío.
+export function leerCarritoGuardado() {
+  const guardado = localStorage.getItem(CLAVE_CARRITO);
+
+  if (guardado === null) {
+    return [];
+  }
+
+  try {
+    return JSON.parse(guardado);
+  } catch {
+    return [];
+  }
+}
+
+export function guardarCarrito(carrito) {
+  localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
+}
