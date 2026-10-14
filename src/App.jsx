@@ -1,15 +1,12 @@
-import { useState } from "react";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import DetalleProducto from "./pages/DetalleProducto";
-import { agregarAlCarrito, contarProductos } from "./utils/carrito";
 import VolverArriba from "./components/VolverArriba";
 import Encabezado from "./components/Encabezado";
 import PiePagina from "./components/PiePagina";
 import Catalogo from "./pages/Catalogo";
 import Carrito from "./pages/Carrito";
 import Inicio from "./pages/Inicio";
-
 
 import {
   agregarAlCarrito,
@@ -19,8 +16,6 @@ import {
   leerCarritoGuardado,
   quitarDelCarrito,
 } from "./utils/carrito";
-
-
 
 
 function App() {
