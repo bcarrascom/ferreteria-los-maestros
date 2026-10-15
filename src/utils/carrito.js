@@ -1,10 +1,24 @@
-import { buscarProductoPorCodigo } from "./productos";
+import { buscarProductoPorCodigo, obtenerProductos } from "./productos";
 
 // Cada elemento del carrito es { codigo, cantidad }.
 // Ninguna función modifica el carrito que recibe: siempre devuelven uno nuevo.
 
 function buscarEnCarrito(carrito, codigo) {
   return carrito.find((item) => item.codigo === codigo);
+}
+
+export function calcularTotal(carrito, productos = obtenerProductos()) {
+  let total = 0;
+
+  carrito.forEach((item) => {
+    const producto = buscarProductoPorCodigo(item.codigo, productos);
+
+    if (producto) {
+      total = total + producto.precio_venta_clp * item.cantidad;
+    }
+  });
+
+  return total;
 }
 
 // Reglas 1, 2 y 3: no duplica, no supera el stock y no agrega sin stock.

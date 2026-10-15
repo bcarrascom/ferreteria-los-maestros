@@ -2,13 +2,12 @@ import { Link, useParams } from "react-router-dom";
 import { formatearPrecio } from "../utils/precio";
 import { buscarProductoPorCodigo } from "../utils/productos";
 
-
 // Página de un solo producto. El código viene en la URL: /catalogo/MC001
-function DetalleProducto({ alAgregar }) {
-  const parametros = useParams(); // devuelve un objeto con los parámetros de la URL
-  const producto = buscarProductoPorCodigo(parametros.codigo);
+function DetalleProducto({ alAgregar, productos }) {
+  const parametros = useParams();
+  const producto = buscarProductoPorCodigo(parametros.codigo, productos);
 
-  if (!producto) {  // si no existe el producto, mostramos un mensaje de error
+  if (!producto) {
     return (
       <section className="container py-5 text-center">
         <h1>Producto no encontrado</h1>
@@ -24,13 +23,15 @@ function DetalleProducto({ alAgregar }) {
 
   return (
     <section className="container py-5" aria-labelledby="titulo-producto">
-
       <div className="row g-5 align-items-center">
         <div className="col-12 col-md-6">
           <img
             className="img-fluid border rounded detalle-producto-imagen"
             src={imagen}
             alt={producto.nombre_producto}
+            onError={(evento) => {
+              evento.currentTarget.src = "/img/logo.jpg";
+            }}
           />
         </div>
 
@@ -62,7 +63,6 @@ function DetalleProducto({ alAgregar }) {
           >
             Agregar al carrito
           </button>
-
         </div>
       </div>
     </section>

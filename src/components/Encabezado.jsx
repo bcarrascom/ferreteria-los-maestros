@@ -1,21 +1,19 @@
 import { Container, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Navegacion from "./Navegacion";
-/* Para que la navegación sea parte del encabezado, la importamos aca directamente
-en vez de importarla a App.jsx */
 
-function Encabezado({ cantidadCarrito }) {
+function Encabezado({ cantidadCarrito, usuario, alCerrarSesion }) {
   return (
     <Navbar
       as="header"
       role={null}
-      expand="md"   /* Dispositivos medianos, 768px*/
+      expand="md"
       bg="white"
       data-bs-theme="light"
       className="py-3 border-bottom border-3 border-primary"
     >
       <Container>
-        <Navbar.Brand as={Link} to="/"className="d-flex align-items-center gap-3">
+        <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-3">
           <img
             src="/img/logo.jpg"
             alt="Logo de Ferretería Los Maestros"
@@ -27,14 +25,16 @@ function Encabezado({ cantidadCarrito }) {
 
         <Navbar.Toggle aria-controls="menu-principal" />
 
-        <Navbar.Collapse id="menu-principal"> 
-          <Navegacion cantidadCarrito={cantidadCarrito} />
+        <Navbar.Collapse id="menu-principal">
+          <Navegacion
+            cantidadCarrito={cantidadCarrito}
+            usuario={usuario}
+            alCerrarSesion={alCerrarSesion}
+          />
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
 
-/* Navbar es un componente de react-boostrap. expand define a partir de que ancho el menú se muesrta desplegado.
- Toggle diuja el botón del menú de hamburguesa y Collapse es el panel en si que se abre y cierra*/
 export default Encabezado;
