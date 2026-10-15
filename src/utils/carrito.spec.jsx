@@ -4,6 +4,8 @@ import {
   calcularTotal,
   cambiarCantidad,
   contarProductos,
+  guardarCarrito,
+  leerCarritoGuardado,
   quitarDelCarrito,
 } from "./carrito";
 
@@ -110,5 +112,33 @@ describe("calcularTotal", () => {
       { codigo: "XX999", cantidad: 5 },
     ];
     expect(calcularTotal(carrito)).toBe(5990);
+  });
+});
+
+
+describe("leerCarritoGuardado", () => {
+  it("parte vacío si no hay nada guardado", () => {
+    expect(leerCarritoGuardado()).toEqual([]);
+  });
+
+  it("devuelve el carrito guardado", () => {
+    localStorage.setItem("carrito", '[{"codigo":"MC001","cantidad":2}]');
+    expect(leerCarritoGuardado()).toEqual([{ codigo: "MC001", cantidad: 2 }]);
+  });
+
+  it("parte vacío si lo guardado está dañado", () => {
+    localStorage.setItem("carrito", "esto no es JSON");
+    expect(leerCarritoGuardado()).toEqual([]);
+  });
+});
+
+describe("guardarCarrito", () => {
+  it("guarda el carrito como texto JSON", () => {
+    const espiaGuardar = vi.spyOn(Storage.prototype, "setItem");
+
+    guardarCarrito([{ codigo: "MC001", cantidad: 1 }]);
+
+    expect(espiaGuardar).toHaveBeenCalledWith("carrito", '[{"codigo":"MC001","cantidad":1}]');
+    espiaGuardar.mockRestore();
   });
 });
