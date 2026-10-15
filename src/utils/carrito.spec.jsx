@@ -4,6 +4,7 @@ import {
   calcularTotal,
   cambiarCantidad,
   contarProductos,
+  limpiarCarrito,
   quitarDelCarrito,
 } from "./carrito";
 
@@ -110,5 +111,43 @@ describe("calcularTotal", () => {
       { codigo: "XX999", cantidad: 5 },
     ];
     expect(calcularTotal(carrito)).toBe(5990);
+  });
+});
+
+// limpiarCarrito usa los productos reales: MC001 existe y tiene stock 80.
+describe("limpiarCarrito", () => {
+  it("si lo guardado no es una lista, devuelve un carrito vacío", () => {
+    expect(limpiarCarrito("hola")).toEqual([]);
+    expect(limpiarCarrito({})).toEqual([]);
+    expect(limpiarCarrito(null)).toEqual([]);
+  });
+
+  it("deja tal cual un carrito válido", () => {
+    const guardado = [{ codigo: "MC001", cantidad: 2 }];
+    expect(limpiarCarrito(guardado)).toEqual([{ codigo: "MC001", cantidad: 2 }]);
+  });
+
+  it("descarta códigos que ya no existen", () => {
+    const guardado = [
+      { codigo: "MC001", cantidad: 1 },
+      { codigo: "ZZ999", cantidad: 1 },
+    ];
+    expect(limpiarCarrito(guardado)).toEqual([{ codigo: "MC001", cantidad: 1 }]);
+  });
+
+  it("descarta cantidades que no son enteros de 1 o más", () => {
+    const guardado = [
+      { codigo: "MC001", cantidad: 0 },
+      { codigo: "MC001", cantidad: -1 },
+      { codigo: "MC001", cantidad: 1.5 },
+      { codigo: "MC001", cantidad: "2" },
+      null,
+    ];
+    expect(limpiarCarrito(guardado)).toEqual([]);
+  });
+
+  it("si la cantidad supera el stock, la deja en el máximo disponible", () => {
+    const guardado = [{ codigo: "MC001", cantidad: 500 }];
+    expect(limpiarCarrito(guardado)).toEqual([{ codigo: "MC001", cantidad: 80 }]);
   });
 });

@@ -82,23 +82,41 @@ export function calcularTotal(carrito) {
 }
 
 
-const CLAVE_CARRITO = "carrito";
+// Nombre con que se guarda el carrito en localStorage.
+export const CLAVE_CARRITO = "carrito";
 
-// Lee el carrito guardado en el navegador. Si no hay o está dañado, parte vacío.
-export function leerCarritoGuardado() {
-  const guardado = localStorage.getItem(CLAVE_CARRITO);
-
-  if (guardado === null) {
+// Revisa el carrito leído del navegador y deja solo items válidos:
+// código existente, con stock, cantidad entera de 1 o más y sin superar el stock.
+export function limpiarCarrito(guardado) {
+  if (!Array.isArray(guardado)) {
     return [];
   }
 
-  try {
-    return JSON.parse(guardado);
-  } catch {
-    return [];
-  }
-}
+  const limpio = [];
 
-export function guardarCarrito(carrito) {
-  localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito));
+  guardado.forEach((item) => {
+    if (!item) {
+      return;
+    }
+
+    const producto = buscarProductoPorCodigo(item.codigo);
+
+    if (!producto || producto.stock === 0) {
+      return;
+    }
+
+    if (!Number.isInteger(item.cantidad) || item.cantidad < 1) {
+      return;
+    }
+
+    let cantidadFinal = item.cantidad;
+
+    if (item.cantidad > producto.stock) {
+      cantidadFinal = producto.stock;
+    }
+
+    limpio.push({ codigo: item.codigo, cantidad: cantidadFinal });
+  });
+
+  return limpio;
 }

@@ -58,4 +58,34 @@ describe("App", () => {
     expect(within(menu).getByRole("link", { name: /carrito/i })).toHaveTextContent("2");
   });
 
+
+  it("recupera el carrito guardado al iniciar", () => {
+    // Simula que el usuario ya había agregado 3 cementos en una visita anterior.
+    localStorage.setItem("carrito", JSON.stringify([{ codigo: "MC001", cantidad: 3 }]));
+
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    const menu = screen.getByRole("navigation", { name: "Navegación principal" });
+    expect(within(menu).getByRole("link", { name: /carrito/i })).toHaveTextContent("3");
+  });
+
+
+  it("guarda el carrito en localStorage al agregar un producto", async () => {
+    render(
+      <MemoryRouter initialEntries={["/catalogo"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    await userEvent.click(
+      screen.getByRole("button", { name: "Agregar Cemento Polpaico gris 25 kg al carrito" })
+    );
+
+    expect(JSON.parse(localStorage.getItem("carrito"))).toEqual([{ codigo: "MC001", cantidad: 1 }]);
+  });
+
 });

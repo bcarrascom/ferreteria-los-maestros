@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 import DetalleProducto from "./pages/DetalleProducto";
 import VolverArriba from "./components/VolverArriba";
 import Encabezado from "./components/Encabezado";
@@ -9,24 +9,20 @@ import Carrito from "./pages/Carrito";
 import Inicio from "./pages/Inicio";
 
 import {
+  CLAVE_CARRITO,
   agregarAlCarrito,
   cambiarCantidad,
   contarProductos,
-  guardarCarrito,
-  leerCarritoGuardado,
+  limpiarCarrito,
   quitarDelCarrito,
 } from "./utils/carrito";
 
 
 function App() {
 
-    // El carrito vive aquí porque lo usan el encabezado y todas las páginas.
-  const [carrito, setCarrito] = useState(leerCarritoGuardado);
-
-  // Cada vez que cambia el carrito, se guarda en el navegador.
-  useEffect(() => {
-    guardarCarrito(carrito);
-  }, [carrito]);
+  // El carrito vive aquí porque lo usan el encabezado y todas las páginas.
+  // useLocalStorage lo guarda en el navegador cada vez que cambia.
+  const [carrito, setCarrito] = useLocalStorage(CLAVE_CARRITO, [], limpiarCarrito);
 
 
   function agregarProducto(producto) {

@@ -1,14 +1,31 @@
-import { useState } from "react";
 import FiltroCategorias from "../components/FiltroCategorias";
 import SeccionCategoria from "../components/SeccionCategoria";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 import {
   obtenerCategorias,
   obtenerProductosPorCategoria,
 } from "../utils/productos";
 
+// Nombre con que se guarda la categoría elegida en localStorage.
+const CLAVE_CATEGORIA = "categoriaActiva";
+
 function Catalogo({ alAgregar }) {
   const categorias = obtenerCategorias();
-  const [categoriaActiva, setCategoriaActiva] = useState("Todas");
+
+  // Si la categoría guardada ya no existe en el catálogo, vuelve a "Todas".
+  function validarCategoria(guardada) {
+    if (categorias.includes(guardada)) {
+      return guardada;
+    }
+    return "Todas";
+  }
+
+  // Recuerda la última categoría elegida, aunque se recargue la página.
+  const [categoriaActiva, setCategoriaActiva] = useLocalStorage(
+    CLAVE_CATEGORIA,
+    "Todas",
+    validarCategoria
+  );
 
   // Con "Todas" se muestran las 9; si no, solo la elegida.
   let categoriasVisibles = categorias;
