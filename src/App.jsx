@@ -109,9 +109,8 @@ function App() {
 
     return <AccesoRestringido usuario={usuario} />;
   }
-  }
 
-  
+
   function agregarProducto(producto) {
     setCarrito(agregarAlCarrito(carrito, producto));
   }
