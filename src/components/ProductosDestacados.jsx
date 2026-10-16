@@ -1,17 +1,16 @@
 import { buscarProductoPorCodigo } from "../utils/productos";
 import GrillaProductos from "./GrillaProductos";
-import { Link } from "react-router-dom";    // enrutamiento sin recargar la pagina
-
+import { Link } from "react-router-dom";
 
 // Mismos códigos que tenía el index.html del Parcial 1.
 const codigosDestacados = ["MC001", "PT001", "HM001", "MC009"];
 
 // Busca cada código en el JSON. Si alguno no existe, avisa y lo salta.
-function buscarDestacados() {
+function buscarDestacados(productos) {
   const encontrados = [];
 
   codigosDestacados.forEach((codigo) => {
-    const producto = buscarProductoPorCodigo(codigo);
+    const producto = buscarProductoPorCodigo(codigo, productos);
 
     if (producto) {
       encontrados.push(producto);
@@ -23,8 +22,8 @@ function buscarDestacados() {
   return encontrados;
 }
 
-function ProductosDestacados({ alAgregar }) {
-  const destacados = buscarDestacados();
+function ProductosDestacados({ alAgregar, productos }) {
+  const destacados = buscarDestacados(productos);
 
   return (
     <section className="container py-5" aria-labelledby="titulo-destacados">
@@ -36,9 +35,9 @@ function ProductosDestacados({ alAgregar }) {
         <Link to="/catalogo" className="btn btn-primary">
           Ver catálogo completo
         </Link>
-      </p>    
+      </p>
     </section>
   );
 }
 
-export default ProductosDestacados;
+export default ProductosDestacados;

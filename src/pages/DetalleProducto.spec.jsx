@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import DetalleProducto from "./DetalleProducto";
@@ -39,6 +39,15 @@ describe("DetalleProducto", () => {
 
     expect(funcionFalsa).toHaveBeenCalledTimes(1);
     expect(funcionFalsa.mock.calls[0][0].codigo).toBe("MC001");
+  });
+
+    it("si la foto no carga, muestra el logo", () => {
+    renderizarEnRuta("/catalogo/MC001", vi.fn());
+    const imagen = screen.getByRole("img", { name: "Cemento Polpaico gris 25 kg" });
+
+    fireEvent.error(imagen);
+
+    expect(imagen.src).toContain("/img/logo.jpg");
   });
 
 });

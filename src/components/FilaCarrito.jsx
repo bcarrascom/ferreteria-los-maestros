@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { formatearPrecio } from "../utils/precio";
 
-// Una fila de la tabla del carrito: producto, precio, cantidad, subtotal y quitar.
 function FilaCarrito({ producto, cantidad, alCambiarCantidad, alQuitar }) {
   const nombre = producto.nombre_producto;
   const subtotal = producto.precio_venta_clp * cantidad;
@@ -13,6 +12,9 @@ function FilaCarrito({ producto, cantidad, alCambiarCantidad, alQuitar }) {
           <img
             src={`/img/productos/${producto.codigo}.jpg`}
             alt=""
+            onError={(evento) => {
+              evento.currentTarget.src = "/img/logo.jpg";
+            }}
             width="56"
             height="56"
             className="object-fit-contain border rounded"
@@ -58,4 +60,4 @@ function FilaCarrito({ producto, cantidad, alCambiarCantidad, alQuitar }) {
   );
 }
 
-export default FilaCarrito;
+export default FilaCarrito;

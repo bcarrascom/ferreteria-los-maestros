@@ -9,8 +9,8 @@ import {
 // Nombre con que se guarda la categoría elegida en localStorage.
 const CLAVE_CATEGORIA = "categoriaActiva";
 
-function Catalogo({ alAgregar }) {
-  const categorias = obtenerCategorias();
+function Catalogo({ alAgregar, productos }) {
+  const categorias = obtenerCategorias(productos);
 
   // Si la categoría guardada ya no existe en el catálogo, vuelve a "Todas".
   function validarCategoria(guardada) {
@@ -21,13 +21,17 @@ function Catalogo({ alAgregar }) {
   }
 
   // Recuerda la última categoría elegida, aunque se recargue la página.
-  const [categoriaActiva, setCategoriaActiva] = useLocalStorage(
+  const [categoriaGuardada, setCategoriaActiva] = useLocalStorage(
     CLAVE_CATEGORIA,
     "Todas",
     validarCategoria
   );
 
-  // Con "Todas" se muestran las 9; si no, solo la elegida.
+  // Se vuelve a validar en cada render: un administrador puede borrar
+  // la categoría mientras está guardada.
+  const categoriaActiva = validarCategoria(categoriaGuardada);
+
+  // Con "Todas" se muestran las categorías; si no, solo la elegida.
   let categoriasVisibles = categorias;
 
   if (categoriaActiva !== "Todas") {
@@ -50,7 +54,7 @@ function Catalogo({ alAgregar }) {
         <SeccionCategoria
           key={categoria}
           categoria={categoria}
-          productos={obtenerProductosPorCategoria(categoria)}
+          productos={obtenerProductosPorCategoria(categoria, productos)}
           alAgregar={alAgregar}
         />
       ))}
@@ -58,4 +62,4 @@ function Catalogo({ alAgregar }) {
   );
 }
 
-export default Catalogo;
+export default Catalogo;

@@ -150,4 +150,21 @@ describe("limpiarCarrito", () => {
     const guardado = [{ codigo: "MC001", cantidad: 500 }];
     expect(limpiarCarrito(guardado)).toEqual([{ codigo: "MC001", cantidad: 80 }]);
   });
+
+  it("valida contra la lista de productos que se le pase", () => {
+    // Lista editada por un administrador: MC001 quedó con stock 2 y PT001 ya no existe.
+    const productosEditados = [{ codigo: "MC001", stock: 2 }];
+    const guardado = [
+      { codigo: "MC001", cantidad: 5 },
+      { codigo: "PT001", cantidad: 1 },
+    ];
+    expect(limpiarCarrito(guardado, productosEditados)).toEqual([{ codigo: "MC001", cantidad: 2 }]);
+  });
+});
+
+describe("calcularTotal con productos editados", () => {
+  it("usa el precio de la lista que se le pase", () => {
+    const productosEditados = [{ codigo: "MC001", precio_venta_clp: 1000 }];
+    expect(calcularTotal([{ codigo: "MC001", cantidad: 3 }], productosEditados)).toBe(3000);
+  });
 });

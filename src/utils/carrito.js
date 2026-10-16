@@ -67,11 +67,12 @@ export function contarProductos(carrito) {
 }
 
 // Suma precio por cantidad. Salta los códigos que ya no existen.
-export function calcularTotal(carrito) {
+// Recibe la lista de productos actual: el administrador puede cambiar precios.
+export function calcularTotal(carrito, listaProductos) {
   let total = 0;
 
   carrito.forEach((item) => {
-    const producto = buscarProductoPorCodigo(item.codigo);
+    const producto = buscarProductoPorCodigo(item.codigo, listaProductos);
 
     if (producto) {
       total = total + producto.precio_venta_clp * item.cantidad;
@@ -87,7 +88,8 @@ export const CLAVE_CARRITO = "carrito";
 
 // Revisa el carrito leído del navegador y deja solo items válidos:
 // código existente, con stock, cantidad entera de 1 o más y sin superar el stock.
-export function limpiarCarrito(guardado) {
+// Se valida contra la lista de productos actual (puede haber sido editada).
+export function limpiarCarrito(guardado, listaProductos) {
   if (!Array.isArray(guardado)) {
     return [];
   }
@@ -99,7 +101,7 @@ export function limpiarCarrito(guardado) {
       return;
     }
 
-    const producto = buscarProductoPorCodigo(item.codigo);
+    const producto = buscarProductoPorCodigo(item.codigo, listaProductos);
 
     if (!producto || producto.stock === 0) {
       return;
