@@ -4,6 +4,9 @@ import {
   obtenerCategorias,
   obtenerProductosPorCategoria,
   obtenerProductos,
+  guardarProductos,
+  leerProductosGuardados,
+
 } from "./productos";
 
 
@@ -39,5 +42,25 @@ describe("obtenerProductosPorCategoria", () => {
 describe("obtenerProductos", () => {
   it("devuelve los 85 productos", () => {
       expect(obtenerProductos()).toHaveLength(85);
+  });
+});
+
+
+describe("leerProductosGuardados", () => {
+  it("sin nada guardado entrega los 85 del JSON", () => {
+    expect(leerProductosGuardados()).toHaveLength(85);
+  });
+
+  it("devuelve los productos guardados", () => {
+    guardarProductos([{ codigo: "AA001" }]);
+    expect(leerProductosGuardados()).toEqual([{ codigo: "AA001" }]);
+  });
+
+  it("si lo guardado está dañado o no es una lista, vuelve al JSON", () => {
+    localStorage.setItem("productos", "esto no es JSON");
+    expect(leerProductosGuardados()).toHaveLength(85);
+
+    localStorage.setItem("productos", '{"no":"es lista"}');
+    expect(leerProductosGuardados()).toHaveLength(85);
   });
 });
