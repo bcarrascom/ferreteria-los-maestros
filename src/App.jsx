@@ -101,14 +101,17 @@ function App() {
     setUsuarios(usuarios.filter((item) => item.id !== id));
   }
 
+  // Muestra la vista solo si hay sesión y el rol coincide.
   function vistaProtegida(rol, vista) {
-    const rolesPermitidos = Array.isArray(rol) ? rol : [rol];
+    if (usuario && usuario.rol === rol) {
+      return vista;
+    }
 
-    return rolesPermitidos.includes(usuario?.rol)
-      ? vista
-      : <AccesoRestringido usuario={usuario} />;
+    return <AccesoRestringido usuario={usuario} />;
+  }
   }
 
+  
   function agregarProducto(producto) {
     setCarrito(agregarAlCarrito(carrito, producto));
   }
