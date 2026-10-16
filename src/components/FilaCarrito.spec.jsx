@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import FilaCarrito from "./FilaCarrito";
@@ -53,4 +53,23 @@ describe("FilaCarrito", () => {
 
     expect(funcionFalsa).toHaveBeenCalledWith("AA001");
   });
+
+  it("si la foto no carga, muestra el logo", () => {
+    const { container } = render(
+      <MemoryRouter>
+        <table>
+          <tbody>
+            <FilaCarrito producto={taladro} cantidad={1} alCambiarCantidad={vi.fn()} alQuitar={vi.fn()} />
+          </tbody>
+        </table>
+      </MemoryRouter>
+    );
+    // La imagen tiene alt="" (decorativa), por eso no se busca por rol.
+    const imagen = container.querySelector("img");
+
+    fireEvent.error(imagen);
+
+    expect(imagen.src).toContain("/img/logo.jpg");
+  });
+
 });
