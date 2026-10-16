@@ -118,4 +118,51 @@ it("crea una cuenta de comprador y abre su vista de cuenta", async () => {
     expect(within(menu).getByRole("link", { name: /carrito/i })).toHaveTextContent("2");
   });
 
+
+    it("recupera el carrito guardado al abrir la página", () => {
+    localStorage.setItem("carrito", '[{"codigo":"MC001","cantidad":3}]');
+
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
+    const menu = screen.getByRole("navigation", { name: "Navegación principal" });
+    expect(within(menu).getByRole("link", { name: /carrito/i })).toHaveTextContent("3");
+  });
+
+  it("en la página del carrito se puede sumar y el cambio se guarda", async () => {
+    render(
+      <MemoryRouter initialEntries={["/catalogo"]}>
+        <App />
+      </MemoryRouter>
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Agregar Cemento Polpaico gris 25 kg al carrito" }));
+
+    const menu = screen.getByRole("navigation", { name: "Navegación principal" });
+    await userEvent.click(within(menu).getByRole("link", { name: /carrito/i }));
+    await userEvent.click(screen.getByRole("button", { name: "Sumar una unidad de Cemento Polpaico gris 25 kg" }));
+
+    // 5990 x 2 = 11980; aparece en el subtotal y en el total.
+    expect(screen.getAllByText("$11.980")).toHaveLength(2);
+    expect(localStorage.getItem("carrito")).toBe('[{"codigo":"MC001","cantidad":2}]');
+  });
+
+  it("en la página del carrito se puede quitar un producto y vaciarlo", async () => {
+    localStorage.setItem("carrito", '[{"codigo":"MC001","cantidad":1},{"codigo":"PT001","cantidad":1}]');
+    render(
+      <MemoryRouter initialEntries={["/carrito"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    await userEvent.click(screen.getByRole("button", { name: "Quitar Cemento Polpaico gris 25 kg del carrito" }));
+    expect(screen.getAllByRole("button", { name: /^Quitar/ })).toHaveLength(1);
+
+    await userEvent.click(screen.getByRole("button", { name: "Vaciar carrito" }));
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Tu carrito está vacío");
+  });
+
+
 });
