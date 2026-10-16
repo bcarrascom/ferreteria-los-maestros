@@ -164,5 +164,56 @@ it("crea una cuenta de comprador y abre su vista de cuenta", async () => {
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Tu carrito está vacío");
   });
 
+    it("el administrador inicia sesión y llega a su panel", async () => {
+    render(
+      <MemoryRouter initialEntries={["/acceso"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    await userEvent.type(screen.getByLabelText("Correo"), "admin@ferreteria.cl");
+    await userEvent.click(screen.getByRole("button", { name: "Continuar" }));
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Panel de administración");
+  });
+
+  it("el comprador inicia sesión, ve su cuenta y puede cerrar sesión", async () => {
+    render(
+      <MemoryRouter initialEntries={["/acceso"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    await userEvent.type(screen.getByLabelText("Correo"), "comprador@ferreteria.cl");
+    await userEvent.click(screen.getByRole("button", { name: "Continuar" }));
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Hola, Camila Compradora");
+
+    await userEvent.click(screen.getByRole("button", { name: "Cerrar sesión" }));
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Ferretería Los Maestros");
+    expect(localStorage.getItem("sesion-ferreteria")).toBeNull();
+  });
+
+  
+  it("el administrador crea, cambia de rol y quita usuarios", async () => {
+    localStorage.setItem("sesion-ferreteria", '{"id":"cuenta-admin","nombre":"Alex Administrador","correo":"admin@ferreteria.cl","rol":"administrador"}');
+    render(
+      <MemoryRouter initialEntries={["/admin/usuarios"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    await userEvent.type(screen.getByLabelText("Nombre"), "Pedro");
+    await userEvent.type(screen.getByLabelText("Correo"), "pedro@mail.cl");
+    await userEvent.click(screen.getByRole("button", { name: "Crear" }));
+    expect(screen.getByRole("row", { name: /Pedro/ })).toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText("Rol de Pedro"), "vendedor");
+    expect(screen.getByLabelText("Rol de Pedro")).toHaveValue("vendedor");
+
+    const fila = screen.getByRole("row", { name: /Pedro/ });
+    await userEvent.click(within(fila).getByRole("button", { name: "Quitar" }));
+    expect(screen.queryByRole("row", { name: /Pedro/ })).not.toBeInTheDocument();
+  });
 
 });
