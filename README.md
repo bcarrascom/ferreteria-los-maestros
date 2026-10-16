@@ -1,4 +1,4 @@
-# Ferretería Los Maestros — versión React
+# **Ferretería Los Maestros — Versión React**
 
 Versión en React del sitio de **Ferretería Los Maestros**, negocio familiar de
 Rengifo 320, La Serena, Región de Coquimbo.
