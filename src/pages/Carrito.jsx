@@ -4,7 +4,7 @@ import { calcularTotal } from "../utils/carrito";
 import { formatearPrecio } from "../utils/precio";
 import { buscarProductoPorCodigo } from "../utils/productos";
 
-function Carrito({ carrito, alCambiarCantidad, alQuitar, alVaciar }) {
+function Carrito({ carrito, productos, alCambiarCantidad, alQuitar, alVaciar }) {
   if (carrito.length === 0) {
     return (
       <section className="container py-5 text-center">
@@ -31,14 +31,12 @@ function Carrito({ carrito, alCambiarCantidad, alQuitar, alVaciar }) {
               <th scope="col">Precio</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Subtotal</th>
-              <th scope="col">
-                <span className="visually-hidden">Acciones</span>
-              </th>
+              <th scope="col"><span className="visually-hidden">Acciones</span></th>
             </tr>
           </thead>
           <tbody>
             {carrito.map((item) => {
-              const producto = buscarProductoPorCodigo(item.codigo);
+              const producto = buscarProductoPorCodigo(item.codigo, productos);
 
               // Si el producto ya no existe, no se muestra.
               if (!producto) {
@@ -58,11 +56,9 @@ function Carrito({ carrito, alCambiarCantidad, alQuitar, alVaciar }) {
           </tbody>
           <tfoot>
             <tr>
-              <th scope="row" colSpan="3">
-                Total
-              </th>
+              <th scope="row" colSpan="3">Total</th>
               <td colSpan="2" className="fw-bold">
-                {formatearPrecio(calcularTotal(carrito))}
+                {formatearPrecio(calcularTotal(carrito, productos))}
               </td>
             </tr>
           </tfoot>

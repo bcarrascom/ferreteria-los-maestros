@@ -1,11 +1,11 @@
 import Hero from "../components/Hero";
 import ProductosDestacados from "../components/ProductosDestacados";
 
-function Inicio({ alAgregar }) {
+function Inicio({ alAgregar, productos }) {
   return (
     <>
       <Hero />
-      <ProductosDestacados alAgregar={alAgregar} />
+      <ProductosDestacados alAgregar={alAgregar} productos={productos} />
     </>
   );
 }

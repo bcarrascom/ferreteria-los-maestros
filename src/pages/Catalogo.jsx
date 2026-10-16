@@ -6,11 +6,11 @@ import {
   obtenerProductosPorCategoria,
 } from "../utils/productos";
 
-function Catalogo({ alAgregar }) {
-  const categorias = obtenerCategorias();
+function Catalogo({ alAgregar, productos }) {
+  const categorias = obtenerCategorias(productos);
   const [categoriaActiva, setCategoriaActiva] = useState("Todas");
 
-  // Con "Todas" se muestran las 9; si no, solo la elegida.
+  // Con "Todas" se muestran las categorías; si no, solo la elegida.
   let categoriasVisibles = categorias;
 
   if (categoriaActiva !== "Todas") {
@@ -33,7 +33,7 @@ function Catalogo({ alAgregar }) {
         <SeccionCategoria
           key={categoria}
           categoria={categoria}
-          productos={obtenerProductosPorCategoria(categoria)}
+          productos={obtenerProductosPorCategoria(categoria, productos)}
           alAgregar={alAgregar}
         />
       ))}
