@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import AccesoRestringido from "./AccesoRestringido";
 import NoEncontrada from "./NoEncontrada";
@@ -16,9 +16,8 @@ describe("páginas simples", () => {
     expect(screen.getByRole("link", { name: "Ir al inicio" })).toHaveAttribute("href", "/");
   });
 
-  it("PanelAdministrador muestra las cantidades que recibe", () => {
-    renderizar(<PanelAdministrador cantidadUsuarios={4} cantidadProductos={85} />);
-    expect(screen.getByText("4 cuentas registradas")).toBeInTheDocument();
+  it("PanelAdministrador muestra la cantidad de productos que recibe", () => {
+    renderizar(<PanelAdministrador cantidadProductos={85} />);
     expect(screen.getByText("85 productos en el catálogo")).toBeInTheDocument();
   });
 
@@ -36,8 +35,8 @@ describe("AccesoRestringido", () => {
   });
 
   it("con sesión dice el rol y ofrece volver a la tienda", () => {
-    renderizar(<AccesoRestringido usuario={{ nombre: "Camila", rol: "comprador" }} />);
-    expect(screen.getByText("Tu cuenta tiene el rol comprador.")).toBeInTheDocument();
+    renderizar(<AccesoRestringido usuario={{ nombre: "Camila", rol: "CLIENTE" }} />);
+    expect(screen.getByText("Tu cuenta tiene el rol CLIENTE.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Volver a la tienda" })).toHaveAttribute("href", "/");
   });
 });

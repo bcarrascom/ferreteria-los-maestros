@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import DetalleProducto from "./pages/DetalleProducto";
 import VolverArriba from "./components/VolverArriba";
@@ -15,8 +15,8 @@ import PanelAdministrador from "./pages/PanelAdministrador";
 import AdminUsuarios from "./pages/AdminUsuarios";
 import GestionProductos from "./pages/GestionProductos";
 import PedidosVendedor from "./pages/PedidosVendedor";
-import AccesoRestringido from "./pages/AccesoRestringido";
 import NoEncontrada from "./pages/NoEncontrada";
+import RutaProtegida from "./components/RutaProtegida";
 
 import {
   agregarAlCarrito,
@@ -26,22 +26,56 @@ import {
   leerCarritoGuardado,
   quitarDelCarrito,
 } from "./utils/carrito";
-import {
-  guardarSesion,
-  guardarUsuarios,
-  leerSesionGuardada,
-  leerUsuariosGuardados,
-} from "./utils/usuarios";
 import { guardarProductos, leerProductosGuardados } from "./utils/productos";
+import { borrarTokens, estaVigente, leerTokens, usuarioDeSesion } from "./utils/sesion";
+import { renovarSesion } from "./api/cliente";
+
+// Sesión al abrir la página (contrato §8.3):
+// access vigente → hay sesión; access vencido pero refresh vigente → renovar antes de mostrar vistas protegidas;
+// los dos vencidos o nada guardado → sin sesión.
+function sesionAlCargar() {
+  const tokens = leerTokens();
+
+  if (tokens && estaVigente(tokens.accessToken)) {
+    return { usuario: usuarioDeSesion(tokens), verificando: false };
+  }
+  if (tokens && estaVigente(tokens.refreshToken)) {
+    return { usuario: null, verificando: true };
+  }
+
+  borrarTokens();
+  return { usuario: null, verificando: false };
+}
 
 function App() {
   const navigate = useNavigate();
 
-  // El carrito, productos, usuarios y sesión se comparten desde App.
+  // El carrito, productos y sesión se comparten desde App. Los usuarios los maneja ms-usuarios.
   const [carrito, setCarrito] = useState(leerCarritoGuardado);
   const [productos, setProductos] = useState(leerProductosGuardados);
-  const [usuarios, setUsuarios] = useState(leerUsuariosGuardados);
-  const [usuario, setUsuario] = useState(leerSesionGuardada);
+  const [sesionInicial] = useState(sesionAlCargar);
+  const [usuario, setUsuario] = useState(sesionInicial.usuario);
+  const [verificandoSesion, setVerificandoSesion] = useState(sesionInicial.verificando);
+
+  useEffect(() => {
+    if (!sesionInicial.verificando) {
+      return;
+    }
+    renovarSesion()
+      .then(() => setUsuario(usuarioDeSesion(leerTokens())))
+      .catch(() => borrarTokens())
+      .finally(() => setVerificandoSesion(false));
+  }, [sesionInicial]);
+
+  // cliente.js avisa con este evento cuando la renovación falla en medio del uso
+  useEffect(() => {
+    function alExpirarSesion() {
+      setUsuario(null);
+      navigate("/acceso");
+    }
+    window.addEventListener("sesion-expirada", alExpirarSesion);
+    return () => window.removeEventListener("sesion-expirada", alExpirarSesion);
+  }, [navigate]);
 
   useEffect(() => {
     guardarCarrito(carrito);
@@ -51,63 +85,46 @@ function App() {
     guardarProductos(productos);
   }, [productos]);
 
-  useEffect(() => {
-    guardarUsuarios(usuarios);
-  }, [usuarios]);
-
-  useEffect(() => {
-    guardarSesion(usuario);
-  }, [usuario]);
-
   function irAlPanel(usuarioActual) {
-    if (usuarioActual.rol === "administrador") {
+    if (usuarioActual.rol === "ADMINISTRADOR") {
       navigate("/admin");
-    } else if (usuarioActual.rol === "vendedor") {
+    } else if (usuarioActual.rol === "VENDEDOR") {
       navigate("/vendedor");
     } else {
       navigate("/cuenta");
     }
   }
 
-  function iniciarSesion(usuarioActual) {
+  // Acceso y Registro ya guardaron los tokens: el usuario visible se lee del access token
+  function iniciarSesion() {
+    const usuarioActual = usuarioDeSesion(leerTokens());
     setUsuario(usuarioActual);
     irAlPanel(usuarioActual);
   }
 
-  function registrarComprador(usuarioNuevo) {
-    setUsuarios([...usuarios, usuarioNuevo]);
-    setUsuario(usuarioNuevo);
+  function registrarCliente() {
+    setUsuario(usuarioDeSesion(leerTokens()));
     navigate("/cuenta");
   }
 
+  // Cerrar sesión borra los tokens; el carrito se conserva.
+  // React Router navega dentro de una transición: si setUsuario(null) quedara fuera, RutaProtegida
+  // vería "sin sesión" en la ruta actual y mandaría a /acceso antes de llegar al inicio.
   function cerrarSesion() {
-    setUsuario(null);
-    navigate("/");
+    borrarTokens();
+    startTransition(() => {
+      setUsuario(null);
+      navigate("/");
+    });
   }
 
-  function actualizarUsuario(usuarioActualizado, yaExiste = false) {
-    if (yaExiste) {
-      setUsuarios(
-        usuarios.map((item) =>
-          item.id === usuarioActualizado.id ? usuarioActualizado : item
-        )
-      );
-    } else {
-      setUsuarios([...usuarios, usuarioActualizado]);
-    }
-  }
-
-  function quitarUsuario(id) {
-    setUsuarios(usuarios.filter((item) => item.id !== id));
-  }
-
-  // Muestra la vista solo si hay sesión y el rol coincide.
-  function vistaProtegida(rol, vista) {
-    if (usuario && usuario.rol === rol) {
-      return vista;
-    }
-
-    return <AccesoRestringido usuario={usuario} />;
+  // Envuelve una vista para que solo la vean los roles indicados
+  function soloPara(roles, vista) {
+    return (
+      <RutaProtegida usuario={usuario} roles={roles} verificando={verificandoSesion}>
+        {vista}
+      </RutaProtegida>
+    );
   }
 
 
@@ -165,46 +182,38 @@ function App() {
 
           <Route
             path="/acceso"
-            element={<Acceso usuarios={usuarios} alAcceder={iniciarSesion} />}
+            element={<Acceso alAcceder={iniciarSesion} />}
           />
           <Route
             path="/registro"
-            element={<Registro usuarios={usuarios} alRegistrar={registrarComprador} />}
+            element={<Registro alRegistrar={registrarCliente} />}
           />
 
           <Route
             path="/cuenta"
-            element={vistaProtegida(
-              "comprador",
+            element={soloPara(
+              ["CLIENTE"],
               <PanelComprador usuario={usuario} />
             )}
           />
           <Route
             path="/admin"
-            element={vistaProtegida(
-              "administrador",
-              <PanelAdministrador
-                cantidadUsuarios={usuarios.length}
-                cantidadProductos={productos.length}
-              />
+            element={soloPara(
+              ["ADMINISTRADOR"],
+              <PanelAdministrador cantidadProductos={productos.length} />
             )}
           />
           <Route
             path="/admin/usuarios"
-            element={vistaProtegida(
-              "administrador",
-              <AdminUsuarios
-                usuarios={usuarios}
-                usuarioActual={usuario}
-                alGuardar={actualizarUsuario}
-                alQuitar={quitarUsuario}
-              />
+            element={soloPara(
+              ["ADMINISTRADOR"],
+              <AdminUsuarios usuarioActual={usuario} />
             )}
           />
           <Route
             path="/admin/productos"
-            element={vistaProtegida(
-              "administrador",
+            element={soloPara(
+              ["ADMINISTRADOR"],
               <GestionProductos
                 productos={productos}
                 alGuardarProductos={setProductos}
@@ -213,16 +222,16 @@ function App() {
           />
           <Route
             path="/admin/pedidos"
-            element={vistaProtegida(
-              "administrador",
+            element={soloPara(
+              ["ADMINISTRADOR"],
               <PedidosVendedor />
             )}
           />
 
           <Route
             path="/vendedor"
-            element={vistaProtegida(
-              "vendedor",
+            element={soloPara(
+              ["VENDEDOR"],
               <PanelVendedor
                 usuario={usuario}
                 cantidadProductos={productos.length}
@@ -231,8 +240,8 @@ function App() {
           />
           <Route
             path="/vendedor/productos"
-            element={vistaProtegida(
-              "vendedor",
+            element={soloPara(
+              ["VENDEDOR"],
               <GestionProductos
                 productos={productos}
                 alGuardarProductos={setProductos}
@@ -241,8 +250,8 @@ function App() {
           />
           <Route
             path="/vendedor/pedidos"
-            element={vistaProtegida(
-              "vendedor",
+            element={soloPara(
+              ["VENDEDOR"],
               <PedidosVendedor />
             )}
           />
@@ -251,7 +260,7 @@ function App() {
         </Routes>
       </main>
 
-      <PiePagina />
+      <PiePagina rol={usuario?.rol} />
     </>
   );
 }

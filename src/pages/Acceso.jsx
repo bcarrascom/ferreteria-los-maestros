@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { buscarUsuarioPorCorreo } from "../utils/usuarios";
+import { iniciarSesion } from "../api/auth";
 
-function Acceso({ usuarios, alAcceder }) {
+function Acceso({ alAcceder }) {
   const [correo, setCorreo] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
-  function enviar(evento) {
+  async function enviar(evento) {
     evento.preventDefault();
-    const usuario = buscarUsuarioPorCorreo(usuarios, correo);
-
-    if (!usuario) {
-      setError("No encontramos ese correo. Puedes crear una cuenta de comprador.");
-      return;
-    }
-
     setError("");
-    alAcceder(usuario);
+    setEnviando(true);
+
+    try {
+      await iniciarSesion(correo.trim(), password);
+      alAcceder();
+    } catch (errorApi) {
+      // El backend responde el mismo mensaje si el correo no existe o la contraseña es incorrecta
+      setError(errorApi.mensaje ?? "No se pudo conectar con el servidor. Intenta de nuevo.");
+      setEnviando(false);
+    }
   }
 
   return (
@@ -25,7 +29,7 @@ function Acceso({ usuarios, alAcceder }) {
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-6">
           <h1 id="titulo-acceso">Iniciar sesión</h1>
-          <p>Escribe el correo de una cuenta registrada para entrar a la tienda o a su panel.</p>
+          <p>Ingresa con tu correo y contraseña para comprar o entrar a tu panel.</p>
           {error && <Alert variant="danger" role="alert">{error}</Alert>}
           <Form onSubmit={enviar} noValidate>
             <Form.Group className="mb-3" controlId="correo-acceso">
@@ -38,19 +42,28 @@ function Acceso({ usuarios, alAcceder }) {
                 required
               />
             </Form.Group>
-            <Button type="submit">Continuar</Button>
+            <Form.Group className="mb-3" controlId="password-acceso">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(evento) => setPassword(evento.target.value)}
+                required
+              />
+            </Form.Group>
+            <Button type="submit" disabled={enviando}>
+              {enviando ? "Ingresando…" : "Ingresar"}
+            </Button>
           </Form>
-          <p className="mt-3 mb-2">Cuentas de demostración:</p>
+          <p className="mt-3 mb-2">Cuentas de demostración (contraseña <code>Maestros2026</code>):</p>
           <ul>
-            <li>comprador@ferreteria.cl</li>
+            <li>cliente@ferreteria.cl</li>
             <li>vendedor@ferreteria.cl</li>
             <li>admin@ferreteria.cl</li>
           </ul>
           <p>
-            ¿Aún no tienes cuenta? <Link to="/registro">Crear cuenta de comprador</Link>
-          </p>
-          <p className="small text-body-secondary">
-            Acceso de demostración: el navegador reconoce el correo, no comprueba una contraseña.
+            ¿Aún no tienes cuenta? <Link to="/registro">Crear cuenta</Link>
           </p>
         </div>
       </div>

@@ -13,4 +13,24 @@ describe("PiePagina", () => {
     expect(screen.getByText(/Rengifo 320/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Catálogo" })).toHaveAttribute("href", "/catalogo");
   });
+
+  it("al vendedor no le muestra accesos a la tienda", () => {
+    render(
+      <MemoryRouter>
+        <PiePagina rol="VENDEDOR" />
+      </MemoryRouter>
+    );
+    expect(screen.queryByRole("navigation", { name: "Navegación del pie de página" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Carrito" })).not.toBeInTheDocument();
+  });
+
+  it("al administrador no le muestra el carrito", () => {
+    render(
+      <MemoryRouter>
+        <PiePagina rol="ADMINISTRADOR" />
+      </MemoryRouter>
+    );
+    expect(screen.getByRole("link", { name: "Catálogo" })).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Carrito" })).not.toBeInTheDocument();
+  });
 });

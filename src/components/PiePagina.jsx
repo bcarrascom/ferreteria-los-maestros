@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-function PiePagina() {
+// rol: el mismo criterio del menú. El vendedor no ve accesos a la tienda y el carrito es solo para invitados y clientes.
+function PiePagina({ rol }) {
+  const esVendedor = rol === "VENDEDOR";
+  const veCarrito = !rol || rol === "CLIENTE";
+
   return (
     <footer className="pie mt-5 py-5">
       <div className="container">
@@ -22,22 +26,26 @@ function PiePagina() {
             </p>
           </section>
 
-          <section className="col-12 col-md-6 col-xl-4">
-            <h2>Navegación</h2>
-            <nav aria-label="Navegación del pie de página">
-              <ul className="list-unstyled d-grid gap-2 mb-0">
-                <li>
-                  <Link to="/">Inicio</Link>
-                </li>
-                <li>
-                  <Link to="/catalogo">Catálogo</Link>
-                </li>
-                <li>
-                  <Link to="/carrito">Carrito</Link>
-                </li>
-              </ul>
-            </nav>
-          </section>
+          {!esVendedor && (
+            <section className="col-12 col-md-6 col-xl-4">
+              <h2>Navegación</h2>
+              <nav aria-label="Navegación del pie de página">
+                <ul className="list-unstyled d-grid gap-2 mb-0">
+                  <li>
+                    <Link to="/">Inicio</Link>
+                  </li>
+                  <li>
+                    <Link to="/catalogo">Catálogo</Link>
+                  </li>
+                  {veCarrito && (
+                    <li>
+                      <Link to="/carrito">Carrito</Link>
+                    </li>
+                  )}
+                </ul>
+              </nav>
+            </section>
+          )}
 
           <section className="col-12 col-md-6 col-xl-4">
             <h2>Síguenos</h2>
