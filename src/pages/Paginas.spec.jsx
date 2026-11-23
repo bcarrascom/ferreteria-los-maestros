@@ -16,9 +16,8 @@ describe("páginas simples", () => {
     expect(screen.getByRole("link", { name: "Ir al inicio" })).toHaveAttribute("href", "/");
   });
 
-  it("PanelAdministrador muestra las cantidades que recibe", () => {
-    renderizar(<PanelAdministrador cantidadUsuarios={4} cantidadProductos={85} />);
-    expect(screen.getByText("4 cuentas registradas")).toBeInTheDocument();
+  it("PanelAdministrador muestra la cantidad de productos que recibe", () => {
+    renderizar(<PanelAdministrador cantidadProductos={85} />);
     expect(screen.getByText("85 productos en el catálogo")).toBeInTheDocument();
   });
 

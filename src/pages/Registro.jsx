@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { registrarCliente } from "../api/auth";
+import CampoFormulario from "../components/CampoFormulario";
 import { esRutValido } from "../utils/rut";
 
 const formularioInicial = {
@@ -17,22 +18,9 @@ const formularioInicial = {
   direccion: "",
 };
 
-// Un campo del formulario con su mensaje de error debajo
-function Campo({ nombre, etiqueta, tipo = "text", autoComplete, datos, errores, alCambiar, className = "col-12" }) {
-  return (
-    <Form.Group className={className} controlId={`${nombre}-registro`}>
-      <Form.Label>{etiqueta}</Form.Label>
-      <Form.Control
-        type={tipo}
-        name={nombre}
-        autoComplete={autoComplete}
-        value={datos[nombre]}
-        onChange={alCambiar}
-        isInvalid={Boolean(errores[nombre])}
-      />
-      <Form.Control.Feedback type="invalid">{errores[nombre]}</Form.Control.Feedback>
-    </Form.Group>
-  );
+// Cada campo del formulario de registro, con su error debajo
+function Campo(props) {
+  return <CampoFormulario idFormulario="registro" {...props} />;
 }
 
 function Registro({ alRegistrar }) {

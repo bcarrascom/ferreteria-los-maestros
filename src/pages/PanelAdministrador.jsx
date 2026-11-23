@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function PanelAdministrador({ cantidadUsuarios, cantidadProductos }) {
+function PanelAdministrador({ cantidadProductos }) {
   return (
     <section className="container py-5" aria-labelledby="titulo-admin">
       <h1 id="titulo-admin">Panel de administración</h1>
@@ -10,7 +10,7 @@ function PanelAdministrador({ cantidadUsuarios, cantidadProductos }) {
           <article className="card h-100">
             <div className="card-body">
               <h2 className="h5">Usuarios</h2>
-              <p>{cantidadUsuarios} cuentas registradas</p>
+              <p>Crea cuentas, asigna roles y elimina usuarios.</p>
               <Link to="/admin/usuarios" className="btn btn-primary">
                 Gestionar usuarios y roles
               </Link>

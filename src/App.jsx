@@ -26,7 +26,6 @@ import {
   leerCarritoGuardado,
   quitarDelCarrito,
 } from "./utils/carrito";
-import { guardarUsuarios, leerUsuariosGuardados } from "./utils/usuarios";
 import { guardarProductos, leerProductosGuardados } from "./utils/productos";
 import { borrarTokens, estaVigente, leerTokens, usuarioDeSesion } from "./utils/sesion";
 import { renovarSesion } from "./api/cliente";
@@ -51,10 +50,9 @@ function sesionAlCargar() {
 function App() {
   const navigate = useNavigate();
 
-  // El carrito, productos, usuarios y sesión se comparten desde App.
+  // El carrito, productos y sesión se comparten desde App. Los usuarios los maneja ms-usuarios.
   const [carrito, setCarrito] = useState(leerCarritoGuardado);
   const [productos, setProductos] = useState(leerProductosGuardados);
-  const [usuarios, setUsuarios] = useState(leerUsuariosGuardados);
   const [sesionInicial] = useState(sesionAlCargar);
   const [usuario, setUsuario] = useState(sesionInicial.usuario);
   const [verificandoSesion, setVerificandoSesion] = useState(sesionInicial.verificando);
@@ -87,10 +85,6 @@ function App() {
     guardarProductos(productos);
   }, [productos]);
 
-  useEffect(() => {
-    guardarUsuarios(usuarios);
-  }, [usuarios]);
-
   function irAlPanel(usuarioActual) {
     if (usuarioActual.rol === "ADMINISTRADOR") {
       navigate("/admin");
@@ -122,22 +116,6 @@ function App() {
       setUsuario(null);
       navigate("/");
     });
-  }
-
-  function actualizarUsuario(usuarioActualizado, yaExiste = false) {
-    if (yaExiste) {
-      setUsuarios(
-        usuarios.map((item) =>
-          item.id === usuarioActualizado.id ? usuarioActualizado : item
-        )
-      );
-    } else {
-      setUsuarios([...usuarios, usuarioActualizado]);
-    }
-  }
-
-  function quitarUsuario(id) {
-    setUsuarios(usuarios.filter((item) => item.id !== id));
   }
 
   // Envuelve una vista para que solo la vean los roles indicados
@@ -222,22 +200,14 @@ function App() {
             path="/admin"
             element={soloPara(
               ["ADMINISTRADOR"],
-              <PanelAdministrador
-                cantidadUsuarios={usuarios.length}
-                cantidadProductos={productos.length}
-              />
+              <PanelAdministrador cantidadProductos={productos.length} />
             )}
           />
           <Route
             path="/admin/usuarios"
             element={soloPara(
               ["ADMINISTRADOR"],
-              <AdminUsuarios
-                usuarios={usuarios}
-                usuarioActual={usuario}
-                alGuardar={actualizarUsuario}
-                alQuitar={quitarUsuario}
-              />
+              <AdminUsuarios usuarioActual={usuario} />
             )}
           />
           <Route

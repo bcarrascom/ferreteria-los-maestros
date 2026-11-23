@@ -204,21 +204,19 @@ describe("sesión y rutas protegidas", () => {
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Iniciar sesión");
   });
 
-  it("el administrador crea, cambia de rol y quita usuarios", async () => {
-    conSesion("ADMINISTRADOR", "Alex Muñoz Herrera");
+  it("el administrador ve los usuarios del backend y no puede tocar su propia cuenta", async () => {
+    conSesion("ADMINISTRADOR", "Alex Muñoz Herrera");   // accessDePrueba usa el id 3
+    vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      respuestaDePrueba(200, [
+        { id: 2, rut: "22222222-2", nombre: "Valentina", apellidos: "Soto Pizarro", correo: "vendedor@ferreteria.cl", rol: "VENDEDOR" },
+        { id: 3, rut: "11111111-1", nombre: "Alex", apellidos: "Muñoz Herrera", correo: "admin@ferreteria.cl", rol: "ADMINISTRADOR" },
+      ])
+    );
     renderizarApp("/admin/usuarios");
 
-    await userEvent.type(screen.getByLabelText("Nombre"), "Pedro");
-    await userEvent.type(screen.getByLabelText("Correo"), "pedro@mail.cl");
-    await userEvent.click(screen.getByRole("button", { name: "Crear" }));
-    expect(screen.getByRole("row", { name: /Pedro/ })).toBeInTheDocument();
-
-    await userEvent.selectOptions(screen.getByLabelText("Rol de Pedro"), "VENDEDOR");
-    expect(screen.getByLabelText("Rol de Pedro")).toHaveValue("VENDEDOR");
-
-    const fila = screen.getByRole("row", { name: /Pedro/ });
-    await userEvent.click(within(fila).getByRole("button", { name: "Quitar" }));
-    expect(screen.queryByRole("row", { name: /Pedro/ })).not.toBeInTheDocument();
+    expect(await screen.findByRole("row", { name: /Valentina Soto Pizarro/ })).toBeInTheDocument();
+    const propia = screen.getByRole("row", { name: /Alex Muñoz Herrera/ });
+    expect(within(propia).getByRole("button", { name: "Eliminar" })).toBeDisabled();
   });
 });
 
