@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { rolesUsuario } from "../utils/usuarios";
 
-const formularioInicial = { nombre: "", correo: "", rol: "comprador" };
+const formularioInicial = { nombre: "", correo: "", rol: "CLIENTE" };
 
 function AdminUsuarios({ usuarios, usuarioActual, alGuardar, alQuitar }) {
   const [datos, setDatos] = useState(formularioInicial);

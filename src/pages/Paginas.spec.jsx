@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import AccesoRestringido from "./AccesoRestringido";
 import NoEncontrada from "./NoEncontrada";
@@ -36,8 +36,8 @@ describe("AccesoRestringido", () => {
   });
 
   it("con sesión dice el rol y ofrece volver a la tienda", () => {
-    renderizar(<AccesoRestringido usuario={{ nombre: "Camila", rol: "comprador" }} />);
-    expect(screen.getByText("Tu cuenta tiene el rol comprador.")).toBeInTheDocument();
+    renderizar(<AccesoRestringido usuario={{ nombre: "Camila", rol: "CLIENTE" }} />);
+    expect(screen.getByText("Tu cuenta tiene el rol CLIENTE.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Volver a la tienda" })).toHaveAttribute("href", "/");
   });
 });

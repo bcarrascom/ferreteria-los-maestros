@@ -44,11 +44,11 @@ describe("AdminUsuarios", () => {
 
     await userEvent.type(screen.getByLabelText("Nombre"), "Pedro");
     await userEvent.type(screen.getByLabelText("Correo"), "Pedro@Mail.cl");
-    await userEvent.selectOptions(screen.getByLabelText("Rol"), "vendedor");
+    await userEvent.selectOptions(screen.getByLabelText("Rol"), "VENDEDOR");
     await userEvent.click(screen.getByRole("button", { name: "Crear" }));
 
     expect(funcionFalsa).toHaveBeenCalledWith(
-      expect.objectContaining({ nombre: "Pedro", correo: "pedro@mail.cl", rol: "vendedor" })
+      expect.objectContaining({ nombre: "Pedro", correo: "pedro@mail.cl", rol: "VENDEDOR" })
     );
     expect(screen.getByLabelText("Nombre")).toHaveValue("");
   });
@@ -57,9 +57,9 @@ describe("AdminUsuarios", () => {
     const funcionFalsa = vi.fn();
     renderizarAdmin(funcionFalsa, vi.fn());
 
-    await userEvent.selectOptions(screen.getByLabelText("Rol de Camila Compradora"), "vendedor");
+    await userEvent.selectOptions(screen.getByLabelText("Rol de Camila Compradora"), "VENDEDOR");
 
-    expect(funcionFalsa).toHaveBeenCalledWith({ ...usuariosDePrueba[0], rol: "vendedor" }, true);
+    expect(funcionFalsa).toHaveBeenCalledWith({ ...usuariosDePrueba[0], rol: "VENDEDOR" }, true);
   });
 
   it("Quitar entrega el id del usuario", async () => {
