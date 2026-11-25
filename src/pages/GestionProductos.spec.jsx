@@ -1,132 +1,170 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { ErrorApi } from "../api/cliente";
+import { listarCategorias } from "../api/categorias";
+import { actualizarProducto, crearProducto, eliminarProducto } from "../api/productos";
 import GestionProductos from "./GestionProductos";
 
+// Mock de módulo: la vista no habla con el backend en las pruebas; se revisa qué le pide a la API
+vi.mock("../api/categorias", () => ({ listarCategorias: vi.fn() }));
+vi.mock("../api/productos", () => ({
+  crearProducto: vi.fn(),
+  actualizarProducto: vi.fn(),
+  eliminarProducto: vi.fn(),
+}));
+
 const productosDePrueba = [
-  { codigo: "AA001", nombre_producto: "Taladro", categoria: "Herramientas", subcategoria: "Eléctricas", marca: "Bosch", unidad: "Unidad", precio_venta_clp: 50000, stock: 5, stock_minimo: 1 },
-  { codigo: "AA002", nombre_producto: "Martillo", categoria: "Herramientas", precio_venta_clp: 8000, stock: 10 },
+  {
+    codigo: "AA001", nombre_producto: "Taladro", categoria: "Herramientas", categoriaId: 2,
+    subcategoria: "Eléctricas", marca: "Bosch", unidad: "Unidad",
+    precio_venta_clp: 50000, precio_compra_clp: 30000, stock: 5, stock_minimo: 1, stock_bajo: false,
+  },
+  {
+    codigo: "AA002", nombre_producto: "Martillo", categoria: "Herramientas", categoriaId: 2,
+    subcategoria: "Manuales", marca: "Stanley", unidad: "Unidad",
+    precio_venta_clp: 8000, precio_compra_clp: 4000, stock: 2, stock_minimo: 3, stock_bajo: true,
+  },
 ];
 
-function renderizarGestion(alGuardarProductos) {
-  render(<GestionProductos productos={productosDePrueba} alGuardarProductos={alGuardarProductos} />);
+const categoriasDePrueba = [
+  { id: 1, nombre: "Mat. Construcción", cantidadProductos: 10 },
+  { id: 2, nombre: "Herramientas", cantidadProductos: 16 },
+];
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  listarCategorias.mockResolvedValue(categoriasDePrueba);
+});
+
+function renderizarGestion(alCambiarCatalogo = vi.fn().mockResolvedValue()) {
+  render(<GestionProductos productos={productosDePrueba} alCambiarCatalogo={alCambiarCatalogo} />);
+  return alCambiarCatalogo;
 }
 
-// Escribe en los campos obligatorios del formulario.
-async function llenarObligatorios(codigo, nombre, precio, stock) {
-  await userEvent.type(screen.getByLabelText("Código"), codigo);
-  await userEvent.type(screen.getByLabelText("Nombre"), nombre);
-  await userEvent.type(screen.getByLabelText("Categoría"), "Jardín");
-  await userEvent.type(screen.getByLabelText("Precio CLP"), precio);
-  await userEvent.type(screen.getByLabelText("Stock"), stock);
+function fila(nombre) {
+  return within(screen.getByRole("cell", { name: nombre }).closest("tr"));
+}
+
+async function llenarFormulario() {
+  await userEvent.type(screen.getByLabelText("Código"), "jd001");
+  await userEvent.type(screen.getByLabelText("Nombre"), "Manguera");
+  await userEvent.selectOptions(await screen.findByLabelText("Categoría"), "Mat. Construcción");
+  await userEvent.type(screen.getByLabelText("Precio de venta"), "12990");
+  await userEvent.type(screen.getByLabelText("Precio de compra"), "7000");
+  await userEvent.type(screen.getByLabelText("Stock"), "8");
 }
 
 describe("GestionProductos", () => {
-  it("muestra una fila por producto", () => {
-    renderizarGestion(vi.fn());
+  it("muestra una fila por producto, con precio de compra y alerta de stock bajo", () => {
+    renderizarGestion();
+
     // 1 fila de encabezado + 2 productos
     expect(screen.getAllByRole("row")).toHaveLength(3);
+    expect(fila("Taladro").getByText("$30.000")).toBeInTheDocument();
+    expect(fila("Martillo").getByText("Stock bajo")).toBeInTheDocument();
+    expect(fila("Taladro").queryByText("Stock bajo")).not.toBeInTheDocument();
   });
 
-  it("no guarda si faltan datos obligatorios", async () => {
-    const funcionFalsa = vi.fn();
-    renderizarGestion(funcionFalsa);
+  it("carga las categorías de la API en el selector", async () => {
+    renderizarGestion();
 
-    await userEvent.click(screen.getByRole("button", { name: "Agregar producto" }));
-
-    expect(screen.getByRole("alert")).toHaveTextContent("Completa código, nombre, categoría");
-    expect(funcionFalsa).not.toHaveBeenCalled();
+    expect(await screen.findByRole("option", { name: "Herramientas" })).toHaveValue("2");
   });
 
-  it("no acepta un código que ya existe", async () => {
-    const funcionFalsa = vi.fn();
-    renderizarGestion(funcionFalsa);
+  it("crea el producto en la API, recarga el catálogo y limpia el formulario", async () => {
+    crearProducto.mockResolvedValue({});
+    const alCambiarCatalogo = renderizarGestion();
 
-    await llenarObligatorios("aa001", "Otro taladro", "1000", "1");
+    await llenarFormulario();
     await userEvent.click(screen.getByRole("button", { name: "Agregar producto" }));
 
-    expect(screen.getByRole("alert")).toHaveTextContent("Ya existe un producto con ese código.");
-    expect(funcionFalsa).not.toHaveBeenCalled();
-  });
-
-  it("agrega un producto nuevo al final de la lista", async () => {
-    const funcionFalsa = vi.fn();
-    renderizarGestion(funcionFalsa);
-
-    await llenarObligatorios("jd001", "Manguera", "12990", "8");
-    await userEvent.click(screen.getByRole("button", { name: "Agregar producto" }));
-
-    const listaNueva = funcionFalsa.mock.calls[0][0];
-    expect(listaNueva).toHaveLength(3);
-    expect(listaNueva[2]).toEqual(
-      expect.objectContaining({ codigo: "JD001", nombre_producto: "Manguera", precio_venta_clp: 12990, stock: 8 })
+    expect(crearProducto).toHaveBeenCalledWith(
+      expect.objectContaining({ codigo: "jd001", nombre_producto: "Manguera", categoriaId: "1", precio_venta_clp: "12990" })
     );
+    expect(alCambiarCatalogo).toHaveBeenCalled();
     expect(screen.getByRole("status")).toHaveTextContent("Producto agregado al catálogo.");
+    expect(screen.getByLabelText("Código")).toHaveValue("");
   });
 
-  it("Editar llena el formulario y Guardar cambios reemplaza ese producto", async () => {
-    const funcionFalsa = vi.fn();
-    renderizarGestion(funcionFalsa);
+  it("un 400 muestra el mensaje y el error de cada campo debajo del campo", async () => {
+    crearProducto.mockRejectedValue(
+      new ErrorApi(400, "Hay datos inválidos", { precioVenta: "El precio de venta es obligatorio" })
+    );
+    const alCambiarCatalogo = renderizarGestion();
 
-    const fila = screen.getByRole("row", { name: /AA001/ });
-    await userEvent.click(within(fila).getByRole("button", { name: "Editar" }));
+    await userEvent.click(screen.getByRole("button", { name: "Agregar producto" }));
 
+    expect(screen.getByRole("alert")).toHaveTextContent("Hay datos inválidos");
+    expect(screen.getByText("El precio de venta es obligatorio")).toBeInTheDocument();
+    expect(screen.getByLabelText("Precio de venta")).toHaveClass("is-invalid");
+    expect(alCambiarCatalogo).not.toHaveBeenCalled();
+  });
+
+  it("un 409 muestra el mensaje del backend y conserva lo escrito", async () => {
+    crearProducto.mockRejectedValue(new ErrorApi(409, "Ya existe un producto con código JD001"));
+    renderizarGestion();
+
+    await llenarFormulario();
+    await userEvent.click(screen.getByRole("button", { name: "Agregar producto" }));
+
+    expect(screen.getByRole("alert")).toHaveTextContent("Ya existe un producto con código JD001");
+    expect(screen.getByLabelText("Nombre")).toHaveValue("Manguera");
+  });
+
+  it("editar carga el producto con el código bloqueado y guarda con PUT a ese código", async () => {
+    actualizarProducto.mockResolvedValue({});
+    renderizarGestion();
+
+    await userEvent.click(fila("Taladro").getByRole("button", { name: "Editar" }));
+    expect(screen.getByLabelText("Código")).toHaveValue("AA001");
     expect(screen.getByLabelText("Código")).toBeDisabled();
-    expect(screen.getByLabelText("Nombre")).toHaveValue("Taladro");
+    expect(screen.getByLabelText("Precio de compra")).toHaveValue(30000);
 
-    await userEvent.clear(screen.getByLabelText("Precio CLP"));
-    await userEvent.type(screen.getByLabelText("Precio CLP"), "45000");
+    await userEvent.clear(screen.getByLabelText("Stock"));
+    await userEvent.type(screen.getByLabelText("Stock"), "9");
     await userEvent.click(screen.getByRole("button", { name: "Guardar cambios" }));
 
-    const listaNueva = funcionFalsa.mock.calls[0][0];
-    expect(listaNueva).toHaveLength(2);
-    expect(listaNueva[0].precio_venta_clp).toBe(45000);
+    expect(actualizarProducto).toHaveBeenCalledWith("AA001", expect.objectContaining({ stock: "9" }));
     expect(screen.getByRole("status")).toHaveTextContent("Producto actualizado.");
   });
 
-  it("Cancelar deja el formulario vacío otra vez", async () => {
-    renderizarGestion(vi.fn());
+  it("eliminar pide confirmación y, si se acepta, llama a la API y recarga", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    eliminarProducto.mockResolvedValue(null);
+    const alCambiarCatalogo = renderizarGestion();
 
-    const fila = screen.getByRole("row", { name: /AA002/ });
-    await userEvent.click(within(fila).getByRole("button", { name: "Editar" }));
-    await userEvent.click(screen.getByRole("button", { name: "Cancelar" }));
+    await userEvent.click(fila("Martillo").getByRole("button", { name: "Eliminar" }));
 
-    expect(screen.getByLabelText("Nombre")).toHaveValue("");
+    expect(window.confirm).toHaveBeenCalledWith("¿Eliminar Martillo?");
+    expect(eliminarProducto).toHaveBeenCalledWith("AA002");
+    expect(alCambiarCatalogo).toHaveBeenCalled();
+  });
+
+  it("eliminar el producto que se está editando también limpia el formulario", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+    eliminarProducto.mockResolvedValue(null);
+    renderizarGestion();
+
+    await userEvent.click(fila("Taladro").getByRole("button", { name: "Editar" }));
+    await userEvent.click(fila("Taladro").getByRole("button", { name: "Eliminar" }));
+
+    expect(screen.getByLabelText("Código")).toHaveValue("");
     expect(screen.getByRole("button", { name: "Agregar producto" })).toBeInTheDocument();
   });
 
-  it("Quitar saca el producto de la lista", async () => {
-    const funcionFalsa = vi.fn();
-    renderizarGestion(funcionFalsa);
+  it("si no se confirma, no elimina nada", async () => {
+    vi.spyOn(window, "confirm").mockReturnValue(false);
+    renderizarGestion();
 
-    const fila = screen.getByRole("row", { name: /AA002/ });
-    await userEvent.click(within(fila).getByRole("button", { name: "Editar" }));
-    await userEvent.click(within(fila).getByRole("button", { name: "Quitar" }));
+    await userEvent.click(fila("Martillo").getByRole("button", { name: "Eliminar" }));
 
-    expect(funcionFalsa).toHaveBeenCalledWith([productosDePrueba[0]]);
-    expect(screen.getByRole("status")).toHaveTextContent("Producto quitado del catálogo.");
-    // Si se quita el que se estaba editando, el formulario se limpia.
-    expect(screen.getByLabelText("Nombre")).toHaveValue("");
+    expect(eliminarProducto).not.toHaveBeenCalled();
   });
 
-  it("si se borra la unidad al editar, vuelve a Unidad", async () => {
-    const funcionFalsa = vi.fn();
-    renderizarGestion(funcionFalsa);
+  it("avisa si no se pudieron cargar las categorías", async () => {
+    listarCategorias.mockRejectedValue(new ErrorApi(500, "Error"));
+    renderizarGestion();
 
-    const fila = screen.getByRole("row", { name: /AA001/ });
-    await userEvent.click(within(fila).getByRole("button", { name: "Editar" }));
-    await userEvent.clear(screen.getByLabelText("Unidad"));
-    await userEvent.click(screen.getByRole("button", { name: "Guardar cambios" }));
-
-    expect(funcionFalsa.mock.calls[0][0][0].unidad).toBe("Unidad");
-  });
-
-  it("Quitar sin estar editando deja el formulario como estaba", async () => {
-    renderizarGestion(vi.fn());
-
-    await userEvent.type(screen.getByLabelText("Nombre"), "A medio escribir");
-    const fila = screen.getByRole("row", { name: /AA002/ });
-    await userEvent.click(within(fila).getByRole("button", { name: "Quitar" }));
-
-    expect(screen.getByLabelText("Nombre")).toHaveValue("A medio escribir");
+    expect(await screen.findByRole("alert")).toHaveTextContent("No se pudieron cargar las categorías.");
   });
 });
