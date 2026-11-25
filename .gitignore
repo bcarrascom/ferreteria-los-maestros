@@ -23,3 +23,5 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+# Secretos del despliegue (docker compose)
+.env
