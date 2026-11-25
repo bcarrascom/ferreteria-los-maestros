@@ -1,0 +1,12 @@
+# Lo que no entra a la imagen de nginx (el Dockerfile está en despliegue/nginx/ y compila desde aquí)
+node_modules/
+dist/
+coverage/
+.git/
+.vscode/
+.idea/
+.env
+despliegue/.env
+*.pem
+*.key
+CLAUDE.md

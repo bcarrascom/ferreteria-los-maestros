@@ -1,0 +1,93 @@
+# Ferretería Los Maestros: los 3 microservicios, MySQL y nginx (front + proxy de la API).
+# Se ejecuta desde esta carpeta:  docker compose up -d --build
+# Los 4 repos van uno al lado del otro (CLAUDE.md §5.1). Si una carpeta se llama distinto,
+# se cambia con USUARIOS_DIR, CATALOGO_DIR o VENTAS_DIR en el .env.
+# Los secretos salen del archivo .env de esta carpeta, que no se sube al repo (ver .env.example).
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      TZ: America/Santiago
+    volumes:
+      - mysql-datos:/var/lib/mysql                                   # los datos sobreviven a reinicios
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro      # crea los 3 schemas la primera vez
+    # Sin "ports": MySQL solo es alcanzable dentro de la red de Docker, nunca desde internet
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  ms-usuarios:
+    build: ${USUARIOS_DIR:-../../ferreteria-ms-usuarios}
+    environment:
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_ACCESS_MINUTOS: ${JWT_ACCESS_MINUTOS:-15}
+      JWT_REFRESH_DIAS: ${JWT_REFRESH_DIAS:-7}
+      TZ: America/Santiago
+    ports:
+      - "8081:8081"            # solo para mostrar Swagger; nginx entra por la red interna
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  ms-catalogo:
+    build: ${CATALOGO_DIR:-../../ferreteria-ms-catalogo}
+    environment:
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY}
+      TZ: America/Santiago
+    ports:
+      - "8082:8082"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  ms-ventas:
+    build: ${VENTAS_DIR:-../../ferreteria-ms-ventas}
+    environment:
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      INTERNAL_API_KEY: ${INTERNAL_API_KEY}
+      CATALOGO_URL: http://ms-catalogo:8082      # nombre del servicio dentro de la red de Docker
+      TZ: America/Santiago
+    ports:
+      - "8083:8083"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      ms-catalogo:
+        condition: service_started
+    restart: unless-stopped
+
+  nginx:
+    # La imagen compila el front (npm run build) y lo sirve junto con el proxy de /api/v1
+    build:
+      context: ..
+      dockerfile: despliegue/nginx/Dockerfile
+    environment:
+      TZ: America/Santiago
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+volumes:
+  mysql-datos:
