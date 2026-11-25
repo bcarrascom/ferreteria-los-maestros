@@ -1,12 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ProductosDestacados from "./ProductosDestacados";
+import { productosDePrueba } from "../test/catalogo";
 
 describe("ProductosDestacados", () => {
   it("muestra los 4 destacados", () => {
     render(
       <MemoryRouter>
-        <ProductosDestacados />
+        <ProductosDestacados productos={productosDePrueba} />
       </MemoryRouter>
     );
     expect(screen.getAllByRole("article")).toHaveLength(4);
@@ -15,7 +16,7 @@ describe("ProductosDestacados", () => {
   it("el botón lleva al catálogo", () => {
     render(
       <MemoryRouter>
-        <ProductosDestacados />
+        <ProductosDestacados productos={productosDePrueba} />
       </MemoryRouter>
     );
     const enlace = screen.getByRole("link", { name: "Ver catálogo completo" });

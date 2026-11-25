@@ -2,13 +2,14 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import DetalleProducto from "./DetalleProducto";
+import { productosDePrueba } from "../test/catalogo";
 
 // Dibuja la página como si el usuario hubiera entrado a esa URL.
 function renderizarEnRuta(ruta, alAgregar) {
   render(
     <MemoryRouter initialEntries={[ruta]}>
       <Routes>
-        <Route path="/catalogo/:codigo" element={<DetalleProducto alAgregar={alAgregar} />} />
+        <Route path="/catalogo/:codigo" element={<DetalleProducto alAgregar={alAgregar} productos={productosDePrueba} />} />
       </Routes>
     </MemoryRouter>
   );

@@ -2,11 +2,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import Carrito from "./Carrito";
+import { productosDePrueba } from "../test/catalogo";
 
 function renderizarCarrito(carrito, alVaciar) {
   render(
     <MemoryRouter>
-      <Carrito carrito={carrito} alCambiarCantidad={vi.fn()} alQuitar={vi.fn()} alVaciar={alVaciar} />
+      <Carrito carrito={carrito} productos={productosDePrueba} alCambiarCantidad={vi.fn()} alQuitar={vi.fn()} alVaciar={alVaciar} />
     </MemoryRouter>
   );
 }

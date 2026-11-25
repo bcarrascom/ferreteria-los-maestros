@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import ProductosDestacados from "./ProductosDestacados";
+import { productosDePrueba } from "../test/catalogo";
 
 // Mock del módulo: reemplaza la búsqueda real por una falsa, donde MC001 no existe.
 vi.mock("../utils/productos", () => ({
@@ -18,7 +19,7 @@ describe("ProductosDestacados con un código que no existe", () => {
 
     render(
       <MemoryRouter>
-        <ProductosDestacados />
+        <ProductosDestacados productos={productosDePrueba} />
       </MemoryRouter>
     );
 

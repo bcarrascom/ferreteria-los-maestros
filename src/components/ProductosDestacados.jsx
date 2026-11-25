@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // Mismos códigos que tenía el index.html del Parcial 1.
 const codigosDestacados = ["MC001", "PT001", "HM001", "MC009"];
 
-// Busca cada código en el JSON. Si alguno no existe, avisa y lo salta.
+// Busca cada código en el catálogo. Si alguno no existe, avisa y lo salta.
 function buscarDestacados(productos) {
   const encontrados = [];
 
@@ -15,7 +15,7 @@ function buscarDestacados(productos) {
     if (producto) {
       encontrados.push(producto);
     } else {
-      console.warn(`Producto con código "${codigo}" no encontrado en productos.json`);
+      console.warn(`Producto con código "${codigo}" no encontrado en el catálogo`);
     }
   });
 
@@ -23,6 +23,11 @@ function buscarDestacados(productos) {
 }
 
 function ProductosDestacados({ alAgregar, productos }) {
+  // Mientras el catálogo carga desde la API la lista está vacía: no hay nada que destacar todavía
+  if (productos.length === 0) {
+    return null;
+  }
+
   const destacados = buscarDestacados(productos);
 
   return (

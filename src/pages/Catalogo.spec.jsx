@@ -2,12 +2,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";  // Envolvemos los render en memoryRouter para que funcionen los Link y useNavigate
 import Catalogo from "./Catalogo";
+import { productosDePrueba } from "../test/catalogo";
 
 describe("Catalogo", () => {
   it("parte mostrando los 85 productos", () => {
     render(
       <MemoryRouter>
-        <Catalogo />
+        <Catalogo productos={productosDePrueba} />
       </MemoryRouter>
     );
     expect(screen.getAllByRole("article")).toHaveLength(85);
@@ -16,7 +17,7 @@ describe("Catalogo", () => {
     it("al elegir una categoría muestra solo sus productos", async () => {
     render(
       <MemoryRouter>
-        <Catalogo />
+        <Catalogo productos={productosDePrueba} />
       </MemoryRouter>
     );
 
@@ -29,7 +30,7 @@ describe("Catalogo", () => {
   it("vuelve a mostrar todo al elegir Todas", async () => {
     render(
       <MemoryRouter>
-        <Catalogo />
+        <Catalogo productos={productosDePrueba} />
       </MemoryRouter>
     );
 

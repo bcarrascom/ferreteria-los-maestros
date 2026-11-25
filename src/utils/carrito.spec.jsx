@@ -8,6 +8,7 @@ import {
   leerCarritoGuardado,
   quitarDelCarrito,
 } from "./carrito";
+import { productosDePrueba } from "../test/catalogo";
 
 // Productos de prueba: AA002 permite probar "sin stock", que no existe en los datos reales.
 const taladro = { codigo: "AA001", stock: 3 };
@@ -103,7 +104,7 @@ describe("calcularTotal", () => {
       { codigo: "MC001", cantidad: 2 },
       { codigo: "PT001", cantidad: 1 },
     ];
-    expect(calcularTotal(carrito)).toBe(21970);
+    expect(calcularTotal(carrito, productosDePrueba)).toBe(21970);
   });
 
   it("ignora códigos que ya no existen", () => {
@@ -111,7 +112,14 @@ describe("calcularTotal", () => {
       { codigo: "MC001", cantidad: 1 },
       { codigo: "XX999", cantidad: 5 },
     ];
-    expect(calcularTotal(carrito)).toBe(5990);
+    expect(calcularTotal(carrito, productosDePrueba)).toBe(5990);
+  });
+
+  it("usa los precios del catálogo que recibe (si el admin cambia un precio, el total cambia)", () => {
+    const carrito = [{ codigo: "MC001", cantidad: 2 }];
+    const catalogoNuevo = [{ codigo: "MC001", precio_venta_clp: 6490 }];
+
+    expect(calcularTotal(carrito, catalogoNuevo)).toBe(12980);
   });
 });
 
