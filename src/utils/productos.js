@@ -1,38 +1,14 @@
-import productosBase from "../data/productos.json";
-
-const CLAVE_PRODUCTOS = "productos";
-
-export function leerProductosGuardados() {
-  const guardados = localStorage.getItem(CLAVE_PRODUCTOS);
-
-  if (guardados === null) {
-    return productosBase;
-  }
-
-  try {
-    const productos = JSON.parse(guardados);
-    return Array.isArray(productos) ? productos : productosBase;
-  } catch {
-    return productosBase;
-  }
-}
-
-export function guardarProductos(productos) {
-  localStorage.setItem(CLAVE_PRODUCTOS, JSON.stringify(productos));
-}
+// Funciones de consulta sobre la lista de productos que vino de ms-catalogo.
+// Ya no hay datos locales: cada función recibe la lista. Sin un valor por defecto, nadie puede leer
+// por error precios o stock viejos de un JSON guardado en el front.
 
 // Devuelve el producto con ese código, o undefined si no existe.
-export function buscarProductoPorCodigo(codigo, listaProductos = productosBase) {
+export function buscarProductoPorCodigo(codigo, listaProductos) {
   return listaProductos.find((producto) => producto.codigo === codigo);
 }
 
-// Devuelve la lista completa de productos.
-export function obtenerProductos(listaProductos = productosBase) {
-  return listaProductos;
-}
-
 // Devuelve las categorías sin repetir.
-export function obtenerCategorias(listaProductos = productosBase) {
+export function obtenerCategorias(listaProductos) {
   const categorias = [];
   listaProductos.forEach((producto) => {
     if (!categorias.includes(producto.categoria)) {
@@ -46,6 +22,6 @@ export function obtenerCategorias(listaProductos = productosBase) {
 // poder agregar nuevas categorías sin tocar el código.
 
 // Devuelve solo los productos de una categoría.
-export function obtenerProductosPorCategoria(categoria, listaProductos = productosBase) {
+export function obtenerProductosPorCategoria(categoria, listaProductos) {
   return listaProductos.filter((producto) => producto.categoria === categoria);
 }

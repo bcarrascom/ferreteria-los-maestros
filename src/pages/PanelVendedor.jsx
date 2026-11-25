@@ -4,7 +4,7 @@ function PanelVendedor({ usuario, cantidadProductos }) {
   return (
     <section className="container py-5" aria-labelledby="titulo-vendedor">
       <h1 id="titulo-vendedor">Panel del vendedor</h1>
-      <p>Hola, {usuario.nombre}. Desde aquí puedes administrar productos y consultar pedidos.</p>
+      <p>Hola, {usuario.nombre}. Desde aquí puedes consultar productos y órdenes.</p>
       <div className="row g-3">
         <div className="col-12 col-md-6">
           <article className="card h-100">
@@ -12,7 +12,7 @@ function PanelVendedor({ usuario, cantidadProductos }) {
               <h2 className="h5">Productos</h2>
               <p>{cantidadProductos} productos en el catálogo</p>
               <Link to="/vendedor/productos" className="btn btn-primary">
-                Administrar productos
+                Ver productos y stock
               </Link>
             </div>
           </article>

@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useCallback, useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import DetalleProducto from "./pages/DetalleProducto";
 import VolverArriba from "./components/VolverArriba";
@@ -14,9 +14,11 @@ import PanelVendedor from "./pages/PanelVendedor";
 import PanelAdministrador from "./pages/PanelAdministrador";
 import AdminUsuarios from "./pages/AdminUsuarios";
 import GestionProductos from "./pages/GestionProductos";
+import ProductosVendedor from "./pages/ProductosVendedor";
 import PedidosVendedor from "./pages/PedidosVendedor";
 import NoEncontrada from "./pages/NoEncontrada";
 import RutaProtegida from "./components/RutaProtegida";
+import AvisoCatalogo from "./components/AvisoCatalogo";
 
 import {
   agregarAlCarrito,
@@ -26,9 +28,9 @@ import {
   leerCarritoGuardado,
   quitarDelCarrito,
 } from "./utils/carrito";
-import { guardarProductos, leerProductosGuardados } from "./utils/productos";
 import { borrarTokens, estaVigente, leerTokens, usuarioDeSesion } from "./utils/sesion";
 import { renovarSesion } from "./api/cliente";
+import { listarProductos } from "./api/productos";
 
 // Sesión al abrir la página (contrato §8.3):
 // access vigente → hay sesión; access vencido pero refresh vigente → renovar antes de mostrar vistas protegidas;
@@ -51,11 +53,44 @@ function App() {
   const navigate = useNavigate();
 
   // El carrito, productos y sesión se comparten desde App. Los usuarios los maneja ms-usuarios.
+  // Los productos vienen de ms-catalogo; el carrito sigue en localStorage.
   const [carrito, setCarrito] = useState(leerCarritoGuardado);
-  const [productos, setProductos] = useState(leerProductosGuardados);
+  const [productos, setProductos] = useState([]);
+  const [cargandoProductos, setCargandoProductos] = useState(true);
+  const [errorProductos, setErrorProductos] = useState("");
   const [sesionInicial] = useState(sesionAlCargar);
   const [usuario, setUsuario] = useState(sesionInicial.usuario);
   const [verificandoSesion, setVerificandoSesion] = useState(sesionInicial.verificando);
+
+  // Pide el catálogo a la API. La usan la carga inicial, el botón Reintentar, la gestión de productos
+  // (después de guardar o eliminar) y, más adelante, el checkout (el stock cambia después de comprar).
+  // useCallback: la misma función en cada render, así el effect de abajo no se repite por gusto.
+  const recargarProductos = useCallback(() => {
+    return listarProductos()
+      .then((lista) => {
+        setProductos(lista);
+        setErrorProductos("");
+      })
+      .catch(() => setErrorProductos("No se pudo cargar el catálogo. Revisa tu conexión e inténtalo de nuevo."))
+      .finally(() => setCargandoProductos(false));
+  }, []);
+
+  // Se carga al abrir la página y otra vez cada vez que cambia el rol de la sesión:
+  // con token de ADMINISTRADOR la API agrega precioCompra, y al cerrar sesión hay que sacarlo.
+  // Si la sesión se está renovando, se espera, para no pedir el catálogo con un token vencido.
+  const rolSesion = usuario?.rol;
+  useEffect(() => {
+    if (verificandoSesion) {
+      return;
+    }
+    recargarProductos();
+  }, [rolSesion, verificandoSesion, recargarProductos]);
+
+  function reintentarCatalogo() {
+    setErrorProductos("");
+    setCargandoProductos(true);
+    recargarProductos();
+  }
 
   useEffect(() => {
     if (!sesionInicial.verificando) {
@@ -80,10 +115,6 @@ function App() {
   useEffect(() => {
     guardarCarrito(carrito);
   }, [carrito]);
-
-  useEffect(() => {
-    guardarProductos(productos);
-  }, [productos]);
 
   function irAlPanel(usuarioActual) {
     if (usuarioActual.rol === "ADMINISTRADOR") {
@@ -116,6 +147,15 @@ function App() {
       setUsuario(null);
       navigate("/");
     });
+  }
+
+  // Las vistas que necesitan el catálogo esperan a que llegue: si no, el detalle diría
+  // "Producto no encontrado" y el carrito saldría vacío durante la carga.
+  function conCatalogo(vista) {
+    if (cargandoProductos) {
+      return <AvisoCatalogo cargando />;
+    }
+    return vista;
   }
 
   // Envuelve una vista para que solo la vean los roles indicados
@@ -154,6 +194,7 @@ function App() {
       />
 
       <main>
+        <AvisoCatalogo error={errorProductos} alReintentar={reintentarCatalogo} />
         <Routes>
           <Route
             path="/"
@@ -161,15 +202,15 @@ function App() {
           />
           <Route
             path="/catalogo"
-            element={<Catalogo alAgregar={agregarProducto} productos={productos} />}
+            element={conCatalogo(<Catalogo alAgregar={agregarProducto} productos={productos} />)}
           />
           <Route
             path="/catalogo/:codigo"
-            element={<DetalleProducto alAgregar={agregarProducto} productos={productos} />}
+            element={conCatalogo(<DetalleProducto alAgregar={agregarProducto} productos={productos} />)}
           />
           <Route
             path="/carrito"
-            element={
+            element={conCatalogo(
               <Carrito
                 carrito={carrito}
                 productos={productos}
@@ -177,7 +218,7 @@ function App() {
                 alQuitar={quitarProducto}
                 alVaciar={vaciarCarrito}
               />
-            }
+            )}
           />
 
           <Route
@@ -214,10 +255,12 @@ function App() {
             path="/admin/productos"
             element={soloPara(
               ["ADMINISTRADOR"],
-              <GestionProductos
-                productos={productos}
-                alGuardarProductos={setProductos}
-              />
+              conCatalogo(
+                <GestionProductos
+                  productos={productos}
+                  alCambiarCatalogo={recargarProductos}
+                />
+              )
             )}
           />
           <Route
@@ -242,10 +285,7 @@ function App() {
             path="/vendedor/productos"
             element={soloPara(
               ["VENDEDOR"],
-              <GestionProductos
-                productos={productos}
-                alGuardarProductos={setProductos}
-              />
+              conCatalogo(<ProductosVendedor productos={productos} />)
             )}
           />
           <Route

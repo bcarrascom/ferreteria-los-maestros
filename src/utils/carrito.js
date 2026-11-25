@@ -66,12 +66,13 @@ export function contarProductos(carrito) {
   return total;
 }
 
-// Suma precio por cantidad. Salta los códigos que ya no existen.
-export function calcularTotal(carrito) {
+// Suma precio por cantidad con los precios del catálogo actual. Salta los códigos que ya no existen.
+// Es solo para mostrar: el total que se cobra lo calcula ms-ventas con los precios de ms-catalogo.
+export function calcularTotal(carrito, productos) {
   let total = 0;
 
   carrito.forEach((item) => {
-    const producto = buscarProductoPorCodigo(item.codigo);
+    const producto = buscarProductoPorCodigo(item.codigo, productos);
 
     if (producto) {
       total = total + producto.precio_venta_clp * item.cantidad;
